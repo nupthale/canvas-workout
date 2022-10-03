@@ -1,0 +1,1 @@
+参考zrender，希望实现可复用与图形Graphic和DOM的动画库；
