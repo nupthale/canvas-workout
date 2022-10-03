@@ -97,7 +97,7 @@ export default class Grid {
             col.x + col.width /2,
             col.y + col.height / 2,
             {
-                color: '#666',
+                color: '#000',
                 textAlign: 'center',
             },
         );

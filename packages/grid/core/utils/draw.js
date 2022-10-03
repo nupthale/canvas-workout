@@ -167,9 +167,9 @@ export const drawText = function(ctx, text, x, y,  style= {}) {
         ctx.fillStyle = style.color;
     }
 
-    const fontSize = style.fontSize;
-    const fontFamily = style.fontFamily || 'Roboto';
-    const fontWeight = style.fontWeight || 500;
+    const fontSize = '14px';
+    const fontFamily = style.fontFamily || 'SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace';
+    const fontWeight = style.fontWeight;
 
     ctx.textAlign = style.textAlign;
     ctx.textBaseline = style.textBaseline;
