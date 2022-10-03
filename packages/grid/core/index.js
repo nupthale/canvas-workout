@@ -19,13 +19,15 @@ export default class Stage {
         columns = [],
         dataSource = [],
         fixedConfig,
+        rowHeights,
+        colWidths,
     }) {
         this.$canvas = $canvas;
         this.initCanvas(width, height);
 
 
         this.dataManager = new DataManager(columns, dataSource);
-        this.layout = new Layout(dataSource.length, columns.length);
+        this.layout = new Layout(dataSource.length, columns.length, rowHeights, colWidths);
 
         this.windowManager = new WindowManager($canvas, width, height, this.layout, this.dataManager, fixedConfig,  (rows) => {
             this.paint();

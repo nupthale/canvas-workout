@@ -18,6 +18,10 @@ export default function gridExample(canvasId) {
         fixedConfig: {
             left: 2,
             header: 2,
+        },
+        colWidths: {
+            0: 60,
+            1: 60,
         }
     });
 }

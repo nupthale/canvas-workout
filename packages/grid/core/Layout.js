@@ -1,12 +1,12 @@
 import {cellStyle} from "./meta.js";
 
 export default class Layout {
-    constructor(rowCount, colCount) {
+    constructor(rowCount, colCount, rowHeights, colWidths) {
         this.rowCount = rowCount;
         this.colCount = colCount;
 
-        this.rowHeights = {};
-        this.colWidths = {};
+        this.rowHeights = rowHeights || {};
+        this.colWidths = colWidths || {};
 
         this.xMap = {
             0: 0,
