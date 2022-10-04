@@ -82,7 +82,7 @@ export default class Grid {
 
 
         // 画内容
-        this.ctx.fillStyle = '#000';
+        this.ctx.fillStyle = '#333';
         this.ctx.fillText(config.getText(col.rowIndex, col.colIndex), col.x + col.width / 2, col.y + col.height / 2);
     }
 

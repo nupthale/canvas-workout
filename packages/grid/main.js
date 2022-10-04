@@ -9,4 +9,7 @@ document.querySelector('#app').innerHTML = `
   </div>
 `
 
-gridExample('canvas');
+window.onload = () => {
+    gridExample('canvas');
+}
+
