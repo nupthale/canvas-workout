@@ -50,6 +50,7 @@ export default class Grid {
     renderCol(col) {
         const { config } = this.context;
 
+        // 不使用封装方法原因， 尽量减少ctx操作， 优化性能
         // 可优化，合并；
         // 画背景
         this.ctx.fillStyle = '#fff';
