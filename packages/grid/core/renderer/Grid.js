@@ -52,14 +52,8 @@ export default class Grid {
 
         // 可优化，合并；
         // 画背景
-        drawRect(
-            this.ctx,
-            col.x,
-            col.y,
-            col.width,
-            col.height,
-            '#fff',
-        );
+        this.ctx.fillStyle = '#fff';
+        this.ctx.fillRect(col.x, col.y, col.width, col.height);
 
         // 画横线
         drawLine(
@@ -72,28 +66,23 @@ export default class Grid {
             2,
         );
 
+        this.ctx.beginPath();
+        // 画横线
+        this.ctx.strokeStyle = strokeColor;
+        this.ctx.lineWidth = 2;
+        this.ctx.moveTo(col.x, col.y + col.height);
+        this.ctx.lineTo(col.x + col.width, col.y + col.height);
         // 画竖线
-        drawLine(
-            this.ctx,
-            col.x + col.width,
-            col.y,
-            col.x + col.width,
-            col.y + col.height,
-            strokeColor,
-            2,
-        );
+        this.ctx.moveTo(col.x + col.width, col.y + col.height);
+        this.ctx.lineTo(col.x + col.width, col.y);
+
+        this.ctx.closePath();
+        this.ctx.stroke();
+
 
         // 画内容
-        drawText(
-            this.ctx,
-            config.getText(col.rowIndex, col.colIndex),
-            col.x + col.width /2,
-            col.y + col.height / 2,
-            {
-                color: '#000',
-                textAlign: 'center',
-            },
-        );
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillText(config.getText(col.rowIndex, col.colIndex), col.x + col.width / 2, col.y + col.height / 2);
     }
 
     renderRows(rows) {
@@ -106,8 +95,25 @@ export default class Grid {
         }
     }
 
+    prepare() {
+        this.ctx.save();
+
+        const fontSize = '14px';
+        const fontFamily = 'SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace';
+        const fontWeight = 'normal';
+
+        this.ctx.textAlign = 'center';
+        this.ctx.fillStyle = '#000';
+        // this.ctx.textBaseline = style.textBaseline;
+        this.ctx.font = [fontWeight, fontSize, fontFamily].join(' ');
+    }
+
     render({ rows, fixedRows }) {
+        this.prepare();
+
         this.renderRows(rows);
         this.renderFixed(fixedRows);
+
+        this.ctx.restore();
     }
 }
