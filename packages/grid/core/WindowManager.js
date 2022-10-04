@@ -1,5 +1,5 @@
 import Scrollable from "./Scrollable.js";
-import FixedManager from "./fixedManager.js";
+import FixedManager from "./FixedManager.js";
 
 import Col from './Col';
 
