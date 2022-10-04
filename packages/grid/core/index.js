@@ -1,41 +1,61 @@
 import {PIXEL_RATIO} from "./utils/util.js";
-import Layout from "./Layout.js";
+import Layout from "./data/Layout.js";
 
-import Grid from "./Grid.js";
-import WindowManager from "./WindowManager.js";
-import FixedManager from "./fixedManager.js";
+import Viewport from "./components/Viewport.js";
+import ClippedData from "./data/ClippedData.js";
+import FixedData from "./data/FixedData.js";
+import Renderer from './renderer/Renderer';
 
+import Config from "./data/Config";
 
-import DataManager from "./DataManager";
+import {strokeColor} from "./meta.js";
 
-
-const strokeColor = '#e8ebed';
 
 export default class Stage {
-    constructor({
-        $canvas,
-        width,
-        height,
-        columns = [],
-        dataSource = [],
-        fixedConfig,
-        rowHeights,
-        colWidths,
-    }) {
+    constructor(props) {
+        const {
+            $canvas,
+            width,
+            height,
+        } = props;
+
         this.$canvas = $canvas;
         this.initCanvas(width, height);
+        this.initContext(props);
 
+        this.clippedData = new ClippedData(this.context);
+        this.fixedData = new FixedData(this.context);
 
-        this.dataManager = new DataManager(columns, dataSource);
-        this.layout = new Layout(dataSource.length, columns.length, rowHeights, colWidths);
+        // 滑动窗口， 分别计算startRowIndex, endRowIndex; startColIndex、endColIndex， 根据startRowIndex，进行layout计算
+        this.renderer = new Renderer(this.context);
 
-        this.windowManager = new WindowManager($canvas, width, height, this.layout, this.dataManager, fixedConfig,  (rows) => {
-            this.paint();
+        this.render();
+    }
+
+    initContext(props) {
+        const {
+            $canvas,
+            columns = [],
+            dataSource = [],
+            rowHeights,
+            colWidths,
+            fixedConfig,
+        } = props;
+
+        this.context = {
+            dom: $canvas,
+            canvasCtx: this.ctx,
+            config: new Config({
+                dom: $canvas,
+                ...props,
+            }),
+            layout: new Layout(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig),
+        };
+
+        this.context.viewport = new Viewport({
+            context: this.context,
+            onUpdate: this.handleViewportUpdate.bind(this),
         });
-
-        this.grid = new Grid(this.ctx, this.windowManager.scroller, this.dataManager,this.windowManager);
-
-        this.paint();
     }
 
     initCanvas(width, height) {
@@ -52,16 +72,21 @@ export default class Stage {
         this.ctx.strokeStyle = strokeColor;
     }
 
-    // 滑动窗口， 分别计算startRowIndex, endRowIndex; startColIndex、endColIndex， 根据startRowIndex，进行layout计算
-    paint() {
-        this.ctx.clearRect(0, 0, this.windowManager.width, this.windowManager.height);
-        this.grid.render({
-            rows: this.windowManager.visibleRows,
+    handleViewportUpdate() {
+        this.clippedData.update(this.context);
+        this.fixedData.update(this.context);
+
+        this.render();
+    }
+
+    render() {
+        this.renderer.paint({
+            rows: this.clippedData.clippedData,
             fixedRows: {
-                leftCorner: this.windowManager.fixedManager.leftCorderRows,
-                left: this.windowManager.fixedManager.fixedLeftRows,
-                header: this.windowManager.fixedManager.fixedHeaderRows,
+                leftCorner: this.fixedData.leftCorderRows,
+                left: this.fixedData.fixedLeftRows,
+                header: this.fixedData.fixedHeaderRows,
             }
-        })
+        });
     }
 }

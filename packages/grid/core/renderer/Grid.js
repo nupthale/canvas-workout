@@ -1,30 +1,29 @@
 
-import {drawLine, drawText, drawRect, shadowRect, clipRect} from "./utils/draw.js";
-import {strokeColor} from "./meta.js";
+import {drawLine, drawText, drawRect, shadowRect, clipRect} from "../utils/draw.js";
+import {strokeColor} from "../meta.js";
 
 export default class Grid {
-    constructor(ctx, scroller, dataManager, windowManager) {
-        this.ctx = ctx;
-        this.scroller = scroller;
-        this.windowManager = windowManager;
-        this.dataManager = dataManager;
+    constructor(context) {
+        this.context = context;
+
+        this.ctx = context.canvasCtx;
     }
 
     renderFixed(fixedRows) {
         const { left, header, leftCorner } = fixedRows;
-        const { scrollLeft = 0, scrollTop = 0 } = this.scroller;
+        const { viewport, layout } = this.context;
 
         // 1. header
         if (header?.length) {
             shadowRect({
                 ctx: this.ctx,
-                x: this.windowManager.fixedManager.fixedLeftWidth,
+                x: layout.fixedLeftWidth,
                 y: 0,
-                w: this.windowManager.width - (this.windowManager.fixedManager.fixedLeftWidth || 0),
-                h: this.windowManager.fixedManager.fixedHeaderHeight || 0,
+                w: viewport.width - (layout.fixedLeftWidth || 0),
+                h: layout.fixedHeaderHeight || 0,
             });
 
-            this.renderRows(header, scrollLeft, 0);
+            this.renderRows(header);
         }
 
         // 2. 左
@@ -32,30 +31,24 @@ export default class Grid {
             shadowRect({
                 ctx: this.ctx,
                 x: 0,
-                y: this.windowManager.fixedManager.fixedHeaderHeight || 0,
-                w: this.windowManager.fixedManager.fixedLeftWidth,
-                h: this.windowManager.height - (this.windowManager.fixedManager.fixedHeaderHeight || 0),
+                y: layout.fixedHeaderHeight || 0,
+                w: layout.fixedLeftWidth,
+                h: viewport.height - (layout.fixedHeaderHeight || 0),
             });
 
-            this.renderRows(left, 0, scrollTop);
+            this.renderRows(left);
         }
 
         // leftCorner
         if (leftCorner) {
-            this.renderRows(leftCorner, 0, 0);
+            this.renderRows(leftCorner);
         }
-
-
-
-
-
-
 
         // 3. 右
     }
 
-
-    renderCol(col, scrollLeft, scrollTop) {
+    renderCol(col) {
+        const { config } = this.context;
 
         // 可优化，合并；
         // 画背景
@@ -93,7 +86,7 @@ export default class Grid {
         // 画内容
         drawText(
             this.ctx,
-            this.dataManager.getText(col.rowIndex, col.colIndex),
+            config.getText(col.rowIndex, col.colIndex),
             col.x + col.width /2,
             col.y + col.height / 2,
             {
@@ -103,21 +96,18 @@ export default class Grid {
         );
     }
 
-    renderRows(rows, scrollLeft, scrollTop) {
+    renderRows(rows) {
         for (let i = 0; i < rows.length; i++) {
             const row = rows[i];
             for (let j = 0; j < row.cols.length; j++) {
                 const col = row.cols[j];
-                this.renderCol(col, scrollLeft, scrollTop);
+                this.renderCol(col);
             }
         }
     }
 
     render({ rows, fixedRows }) {
-        const { scrollLeft = 0, scrollTop = 0 } = this.scroller;
-        this.renderRows(rows, scrollLeft, scrollTop);
-
-        console.info('##fixedrows', fixedRows);
+        this.renderRows(rows);
         this.renderFixed(fixedRows);
     }
 }

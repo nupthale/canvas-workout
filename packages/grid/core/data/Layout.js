@@ -1,12 +1,14 @@
-import {cellStyle} from "./meta.js";
+import {cellStyle} from "../meta.js";
 
 export default class Layout {
-    constructor(rowCount, colCount, rowHeights, colWidths) {
+    constructor(rowCount, colCount, rowHeights, colWidths, fixedConfig) {
         this.rowCount = rowCount;
         this.colCount = colCount;
 
         this.rowHeights = rowHeights || {};
         this.colWidths = colWidths || {};
+
+        this.fixedConfig = fixedConfig;
 
         this.xMap = {
             0: 0,
@@ -19,6 +21,21 @@ export default class Layout {
         this.totalHeight = this._getTotalHeight();
 
         this.init();
+        this.initFixedWidth();
+    }
+
+    initFixedWidth() {
+        let fixedLeftWidth = 0;
+        for (let i = 0; i < this.fixedConfig.left; i++) {
+            fixedLeftWidth += this.getColWidth(i);
+        }
+        this.fixedLeftWidth = fixedLeftWidth;
+
+        let fixedHeaderHeight = 0;
+        for (let i = 0; i < this.fixedConfig.header; i++) {
+            fixedHeaderHeight += this.getRowHeight(i);
+        }
+        this.fixedHeaderHeight = fixedHeaderHeight;
     }
 
     _getTotalWidth() {
