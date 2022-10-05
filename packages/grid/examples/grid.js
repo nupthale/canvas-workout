@@ -8,7 +8,6 @@ export default function gridExample(canvasId) {
     const width = document.documentElement.clientWidth - 40;
     const height = document.documentElement.clientHeight - 40;
 
-    debugger;
     const grid = new Grid({
         $canvas,
         width,

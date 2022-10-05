@@ -8,6 +8,7 @@ export default class Viewport extends Scrollable {
 
         super({
             dom,
+            context,
             width,
             height,
             scrollWidth: totalWidth,
@@ -25,8 +26,6 @@ export default class Viewport extends Scrollable {
         this.endRowIndex = 0;
         this.startColIndex = 0;
         this.endColIndex = 0;
-
-        this.moveWindow();
     }
 
     updateEndRowIndex() {
@@ -163,5 +162,9 @@ export default class Viewport extends Scrollable {
 
         this.updateEndRowIndex();
         this.updateEndColIndex();
+
+        if (this.scrollbar) {
+            this.scrollbar.update();
+        }
     }
 }

@@ -18,7 +18,10 @@ importers:
 
   packages/grid:
     specifiers:
+      rxjs: ^7.5.7
       vite: ^3.1.0
+    dependencies:
+      rxjs: 7.5.7
     devDependencies:
       vite: 3.1.4
 

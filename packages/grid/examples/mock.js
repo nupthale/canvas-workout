@@ -58,7 +58,9 @@ export const columns = [
 ];
 
 const list = [];
-for (let i = 0; i < 1000000; i++) {
+const million = 1000000;
+
+for (let i = 0; i < 5 * million; i++) {
     list.push(
         {index: i, avatar: '🎅🏻',name: 'chuanJianGuo', age: 74, address: 'America'},
     );

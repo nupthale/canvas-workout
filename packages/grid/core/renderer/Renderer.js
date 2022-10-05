@@ -1,4 +1,5 @@
 import Grid from "./Grid";
+import Scrollbar from "./Scrollbar";
 
 export default class Renderer {
     constructor(context) {
@@ -7,6 +8,7 @@ export default class Renderer {
         this.components = [
             // 画Grid
             new Grid(context),
+            new Scrollbar(context),
             // 画其他， 预留
         ];
     }

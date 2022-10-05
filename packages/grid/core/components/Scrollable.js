@@ -1,7 +1,10 @@
+import Scrollbar from "./Scrollbar.js";
+
 
 export default class Scrollable {
     constructor(props) {
         this.dom = props.dom;
+        this.context = props.context;
 
         this.scrollLeft = 0;
         this.scrollTop = 0;
@@ -15,6 +18,11 @@ export default class Scrollable {
         this.scrollHeight = props.scrollHeight;
         this.onScroll = props.onScroll;
 
+        this.isHorizontalScrollable = this.scrollWidth > this.width;
+        this.isVerticalScrollable = this.scrollHeight > this.height;
+
+        this.scrollbar = new Scrollbar(this.context);
+
         this.initEvent();
     }
 
@@ -27,6 +35,8 @@ export default class Scrollable {
     }
 
     initEvent() {
+        const { event$ } = this.context;
+
         this.dom.addEventListener('mousewheel', (e) => {
             e.stopPropagation();
             this.scrollBy(e.deltaX, e.deltaY);

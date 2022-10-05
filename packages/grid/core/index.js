@@ -6,10 +6,11 @@ import ClippedData from "./data/ClippedData.js";
 import FixedData from "./data/FixedData.js";
 import Renderer from './renderer/Renderer';
 
+import EventRegistry from "./event/EventRegistry.js";
+
 import Config from "./data/Config";
 
 import {strokeColor} from "./meta.js";
-
 
 export default class Stage {
     constructor(props) {
@@ -43,7 +44,9 @@ export default class Stage {
         } = props;
 
         this.context = {
+            stage: this,
             dom: $canvas,
+            event$: new EventRegistry($canvas),
             canvasCtx: this.ctx,
             config: new Config({
                 dom: $canvas,
@@ -56,6 +59,8 @@ export default class Stage {
             context: this.context,
             onUpdate: this.handleViewportUpdate.bind(this),
         });
+
+        this.context.viewport.moveWindow();
     }
 
     initCanvas(width, height) {
@@ -64,6 +69,7 @@ export default class Stage {
         this.$canvas.height = height * PIXEL_RATIO;
         this.$canvas.style.width = `${width}px`;
         this.$canvas.style.height = `${height}px`;
+        this.$canvas.style.background = '#fff';
 
         this.ctx.setTransform(PIXEL_RATIO, 0, 0 , PIXEL_RATIO, 0, 0);
         this.ctx.fillStyle = '#fff';
@@ -81,6 +87,7 @@ export default class Stage {
 
     render() {
         this.renderer.paint({
+            scrollbar: this.context.viewport.scrollbar,
             rows: this.clippedData.clippedData,
             fixedRows: {
                 leftCorner: this.fixedData.leftCorderRows,

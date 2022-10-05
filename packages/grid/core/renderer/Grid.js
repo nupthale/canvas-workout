@@ -34,6 +34,7 @@ export default class Grid {
                 y: layout.fixedHeaderHeight || 0,
                 w: layout.fixedLeftWidth,
                 h: viewport.height - (layout.fixedHeaderHeight || 0),
+
             });
 
             this.renderRows(left);

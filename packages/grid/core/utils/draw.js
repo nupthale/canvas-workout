@@ -37,13 +37,16 @@ export const drawRect = (
     startY,
     width,
     height,
-    color
+    color,
+    borderRadius,
 ) => {
     if (color) {
         ctx.save();
         ctx.fillStyle = color;
     }
-    ctx.fillRect(startX, startY, width, height);
+
+    roundRect(ctx, startX, startY, width, height, borderRadius);
+    ctx.fill();
 
     if (color) {
         ctx.restore();
