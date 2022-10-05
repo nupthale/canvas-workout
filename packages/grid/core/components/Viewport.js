@@ -15,6 +15,7 @@ export default class Viewport extends Scrollable {
             scrollHeight: totalHeight,
             onScroll: () => {
                 this.moveWindow();
+
                 onUpdate?.();
             },
         });
@@ -162,9 +163,5 @@ export default class Viewport extends Scrollable {
 
         this.updateEndRowIndex();
         this.updateEndColIndex();
-
-        if (this.scrollbar) {
-            this.scrollbar.update();
-        }
     }
 }

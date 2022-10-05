@@ -19,7 +19,7 @@ export default function gridExample(canvasId) {
             header: 2,
         },
         colWidths: {
-            0: 60,
+            0: 100,
             1: 60,
         }
     });

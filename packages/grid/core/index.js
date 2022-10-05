@@ -61,6 +61,7 @@ export default class Stage {
         });
 
         this.context.viewport.moveWindow();
+        this.context.viewport.scrollbar.update();
     }
 
     initCanvas(width, height) {

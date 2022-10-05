@@ -21,7 +21,7 @@ export default class Scrollable {
         this.isHorizontalScrollable = this.scrollWidth > this.width;
         this.isVerticalScrollable = this.scrollHeight > this.height;
 
-        this.scrollbar = new Scrollbar(this.context);
+        this.scrollbar = new Scrollbar(this.context, this.scrollToX.bind(this), this.scrollToY.bind(this));
 
         this.initEvent();
     }
@@ -43,6 +43,20 @@ export default class Scrollable {
         });
     }
 
+    scrollToX(scrollLeft) {
+        this.prevScrollLeft = this.scrollLeft;
+
+        this.scrollLeft = Math.min(scrollLeft, this.maxScrollLeft);
+        this.onScroll?.();
+    }
+
+    scrollToY(scrollTop) {
+        this.prevScrollTop = this.scrollTop;
+
+        this.scrollTop = Math.min(scrollTop, this.maxScrollTop);
+        this.onScroll?.();
+    }
+
     scrollBy(deltaX, deltaY) {
         this.prevScrollLeft = this.scrollLeft;
         this.prevScrollTop = this.scrollTop;
@@ -50,11 +64,13 @@ export default class Scrollable {
 
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
             if (this.scrollByX(deltaX)) {
-                this.onScroll?.(deltaX, 0);
+                this.onScroll?.();
+                this.scrollbar.update();
             }
         } else {
             if (this.scrollByY(deltaY)) {
-                this.onScroll?.(0, deltaY);
+                this.onScroll?.();
+                this.scrollbar.update();
             }
         }
     }

@@ -23,7 +23,6 @@ export default class Scrollbar {
             vScrollbar,
             hScrollbar,
         } = scrollbar;
-        debugger;
 
         // 画横向的滚动handler
         if (isHorizontalScrollable) {
