@@ -1,13 +1,9 @@
-import DecoratedCol from "./DecoratedCol.js";
-
 // 横向：range内，除了end， 都不画右边border
 // 纵向：range内，除了end， 都不画下边border
 // 二维：一样， 先全部横向， 再全部纵向， 规则一样
 // 考虑fixed和非fixed不能合并， 这种逻辑靠上层交互控制；底层只关心数据结构和渲染；
-export default class CombinableCol extends DecoratedCol {
+export default class CombinableCol {
     constructor(context, rowIndex, colIndex, width, height) {
-        super(context, rowIndex, colIndex);
-
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
 

@@ -1,5 +1,9 @@
-export default class DecoratedCol {
-    constructor(context, rowIndex, colIndex) {
+import CombinableCol from "./CombinableCol.js";
+
+export default class DecoratedCol extends CombinableCol {
+    constructor(context, rowIndex, colIndex, width, height) {
+        super(context, rowIndex, colIndex, width, height);
+
         this.background = this.getBackground(context, rowIndex, colIndex);
     }
 
