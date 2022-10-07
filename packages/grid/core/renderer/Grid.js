@@ -1,6 +1,6 @@
 
 import {drawLine, drawText, drawRect, shadowRect, clipRect} from "../utils/draw.js";
-import {strokeColor} from "../meta.js";
+import {strokeColor, borderWidth} from "../meta.js";
 
 export default class Grid {
     constructor(context) {
@@ -50,41 +50,39 @@ export default class Grid {
 
     renderCol(col) {
         const { config } = this.context;
-
         // 不使用封装方法原因， 尽量减少ctx操作， 优化性能
         // 可优化，合并；
-        // 画背景
-        this.ctx.fillStyle = '#fff';
-        this.ctx.fillRect(col.x, col.y, col.width, col.height);
-
-        // 画横线
-        drawLine(
-            this.ctx,
-            col.x,
-            col.y + col.height,
-            col.x + col.width,
-            col.y + col.height,
-            strokeColor,
-            2,
-        );
-
         this.ctx.beginPath();
-        // 画横线
         this.ctx.strokeStyle = strokeColor;
-        this.ctx.lineWidth = 2;
-        this.ctx.moveTo(col.x, col.y + col.height);
-        this.ctx.lineTo(col.x + col.width, col.y + col.height);
-        // 画竖线
-        this.ctx.moveTo(col.x + col.width, col.y + col.height);
-        this.ctx.lineTo(col.x + col.width, col.y);
+        this.ctx.lineWidth = borderWidth;
 
-        this.ctx.closePath();
+        // 画横线
+        if (!col.isCombined || col.isCombinedLastRow) {
+            this.ctx.moveTo(col.x, col.y + col.height);
+            this.ctx.lineTo(col.x + col.width, col.y + col.height);
+        }
+
+        // 画竖线
+        if (!col.isCombined || col.isCombinedLastCol) {
+            this.ctx.moveTo(col.x + col.width, col.y + col.height);
+            this.ctx.lineTo(col.x + col.width, col.y);
+        }
+
         this.ctx.stroke();
 
 
+
+
         // 画内容
-        this.ctx.fillStyle = '#333';
-        this.ctx.fillText(config.getText(col.rowIndex, col.colIndex), col.x + col.width / 2, col.y + col.height / 2);
+        if (!col.isCombined || col.isCombinedStart) {
+            // 画背景
+            this.ctx.beginPath();
+            this.ctx.fillStyle = col.background;
+            this.ctx.fillRect(col.x + borderWidth, col.y + borderWidth, col.combineWidth - borderWidth * 2, col.combineHeight - borderWidth * 2);
+
+            this.ctx.fillStyle = '#333';
+            this.ctx.fillText(config.getText(col.rowIndex, col.colIndex), col.x + col.combineWidth / 2, col.y + col.combineHeight / 2);
+        }
     }
 
     renderRows(rows) {

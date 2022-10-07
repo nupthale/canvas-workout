@@ -21,6 +21,25 @@ export default function gridExample(canvasId) {
         colWidths: {
             0: 100,
             1: 60,
+            7: 60,
+        },
+        combineRanges: [
+            { start: [3, 3], end: [3, 5] }
+        ],
+        decorators: {
+            background: [{
+                rowIndex: 6,
+                colIndex: 6,
+                color: '#F59571',
+            }, {
+                rowIndex: 7,
+                colIndex: 6,
+                color: '#F59571',
+            }, {
+                rowIndex: 8,
+                colIndex: 6,
+                color: '#F59571',
+            }]
         }
     });
 }

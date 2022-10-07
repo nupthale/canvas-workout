@@ -10,6 +10,8 @@ export const height = 500;
 
 export const strokeColor = '#e8ebed';
 
+export const borderWidth = 1;
+
 export const containerPadding = 12;
 
 export const getTableViewWidth = () => width - containerPadding * 2;

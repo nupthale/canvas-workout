@@ -1,21 +1,28 @@
-import {filter, Subject, tap} from "rxjs";
-
 export default class EventBus {
     constructor() {
-        this.event$ = new Subject({});
+        this.event$ = {};
     }
 
-    on(name, handler) {
-        return this.event$.pipe(
-            filter((e) => e.name === name),
-            tap((e) => handler(e.value)),
-        ).subscribe();
+    on(name, callback, priority = 0) {
+        this.event$[name] = this.event$[name] || [];
+        this.event$[name].push({
+            priority,
+            callback,
+        });
+
+        this.event$[name].sort((a, b) => a.priority - b.priority);
     }
 
     emit(name, value) {
-        this.event$.next({
-            name,
-            value,
-        });
+        const handlers = this.event$[name] || [];
+
+        for (let i = 0; i < handlers.length; i++) {
+            const handler = handlers[i];
+            const shouldBreak = !handler.callback(value);
+
+            if (shouldBreak) {
+                break;
+            }
+        }
     }
 }

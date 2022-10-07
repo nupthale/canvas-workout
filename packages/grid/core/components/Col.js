@@ -1,5 +1,10 @@
-export default class Col {
+import CombinableCol from "./CombinableCol.js";
+
+
+export default class Col extends CombinableCol {
     constructor(context, rowIndex, colIndex, x, y, width, height) {
+        super(context, rowIndex, colIndex, width, height);
+
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
 

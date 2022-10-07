@@ -9,6 +9,8 @@ export default class Config {
         fixedConfig,
         rowHeights,
         colWidths,
+        combineRanges,
+        decorators,
     }) {
         this.dom = dom;
         this.width = width;
@@ -20,6 +22,11 @@ export default class Config {
 
         this.rowHeights = rowHeights;
         this.colWidths = colWidths;
+
+        // [{ start: [0, 1], end: [3, 1] }]
+        this.combineRanges = combineRanges || [];
+        // 背景色、文字颜色，大小等
+        this.decorators = decorators;
     }
 
     getText(rowIndex, colIndex) {
