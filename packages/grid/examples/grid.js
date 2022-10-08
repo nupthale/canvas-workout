@@ -50,13 +50,17 @@ export default function gridExample(canvasId) {
         }
     });
 
-    const getRandomColor = function(){
-        return '#'+Math.floor(Math.random()*16777215).toString(16);
+    function getRandomColor() { //随机生成RGB颜色
+        const r = Math.floor(Math.random() * 256); //随机生成256以内r值
+        const g = Math.floor(Math.random() * 256); //随机生成256以内g值
+        const b = Math.floor(Math.random() * 256); //随机生成256以内b值
+        return `rgb(${r},${g},${b}, 0.4)`; //返回rgb(r,g,b)格式颜色
     }
 
     setInterval(() => {
         const randomColor1 = getRandomColor();
         const randomColor2 = getRandomColor();
+        const rangeRandomNumber = Math.floor(9 * Math.random()) + 3;
 
         grid.update({
             columns,
@@ -74,7 +78,7 @@ export default function gridExample(canvasId) {
                 3: 200,
             },
             combineRanges: [
-                { start: [3, 3], end: [3, 12] }
+                { start: [3, 3], end: [3, rangeRandomNumber] }
             ],
             decorators: {
                 background: [{
