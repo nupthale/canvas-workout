@@ -36,10 +36,10 @@ export default class Scrollbar {
 
         event$.on('mousemove', (e) => {
             if (this.scroll(e)) {
-                return true;
+                return;
             }
 
-            return !this.hover(e, left, top);
+            this.hover(e, left, top);
         });
 
         event$.on('mousedown', (e) => {

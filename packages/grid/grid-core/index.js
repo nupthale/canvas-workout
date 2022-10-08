@@ -8,7 +8,7 @@ import Renderer from './renderer/Renderer';
 
 import EventRegistry from "./event/EventRegistry.js";
 
-import Selection from "./selection/Selection.js";
+import ExpandableSelection from "./selection/ExpandableSelection.js";
 
 import Config from "./data/Config";
 
@@ -32,7 +32,7 @@ export default class Stage {
         // 滑动窗口， 分别计算startRowIndex, endRowIndex; startColIndex、endColIndex， 根据startRowIndex，进行layout计算
         this.renderer = new Renderer(this.context);
 
-        this.selection = new Selection(this);
+        this.selection = new ExpandableSelection(this);
 
         this.render();
     }
@@ -92,6 +92,8 @@ export default class Stage {
     }
 
     render() {
+        console.info('#render', this.selection);
+
         this.renderer.paint({
             scrollbar: this.context.viewport.scrollbar,
             rows: this.clippedData.clippedData,

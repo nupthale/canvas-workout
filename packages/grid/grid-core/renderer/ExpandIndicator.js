@@ -11,9 +11,10 @@ export default class ExpandIndicator {
 
     render({ selection }) {
         const activeCol = selection.activeCol;
+        const selectionCol = selection.selectionCol;
 
         if (activeCol) {
-            const indicator = getIndicatorBoundingRect(activeCol);
+            const indicator = getIndicatorBoundingRect(activeCol, selectionCol);
 
             drawRect(
                 this.ctx,

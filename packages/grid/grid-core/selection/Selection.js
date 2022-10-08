@@ -1,5 +1,4 @@
-import {findColByEvent, getIndicatorBoundingRect} from "./util.js";
-import {isEventInView} from "../utils/util.js";
+import {findColByEvent } from "./util.js";
 
 export default class Selection {
     constructor(stage) {
@@ -10,7 +9,7 @@ export default class Selection {
         this.selectionCol = null;
 
         this.stage = stage;
-        this.initEvt();
+        this.initSelectionEvt();
     }
 
     get selection() {
@@ -30,7 +29,7 @@ export default class Selection {
         }
     }
 
-    getClickedCol(eventX, eventY) {
+    getCol(eventX, eventY) {
         const { clippedData, fixedData } = this.stage;
 
         // 先找fixed， 没找到再找clipped
@@ -57,42 +56,17 @@ export default class Selection {
         return result;
     }
 
-    isEnterIndicator(x, y) {
-        if (!this.activeCol) {
-            return false;
-        }
-
-        const indicator = getIndicatorBoundingRect(this.activeCol);
-        console.info('xy', x, y, indicator);
-
-        return isEventInView(x, y, indicator);
-    }
-
-    initEvt() {
+    initSelectionEvt() {
         const { context } = this.stage;
         const { event$, dom } = context;
 
-        event$.on('click', (e) => {
+        event$.on('mousedown', (e) => {
             const {left, top} = dom.getBoundingClientRect();
             const eventX = e.clientX - left;
             const eventY = e.clientY - top;
 
-            this.activeCol = this.getClickedCol(eventX, eventY);
+            this.activeCol = this.getCol(eventX, eventY);
             this.stage.render();
-        });
-
-        event$.on('mousemove', (e) => {
-            debugger
-            const {left, top} = dom.getBoundingClientRect();
-            const eventX = e.clientX - left;
-            const eventY = e.clientY - top;
-
-
-            if (this.isEnterIndicator(eventX, eventY)) {
-                dom.style.cursor = 'crosshair';
-            } else {
-                dom.style.cursor = 'cell';
-            }
         });
     }
 }

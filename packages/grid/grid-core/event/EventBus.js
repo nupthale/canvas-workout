@@ -10,21 +10,21 @@ export default class EventBus {
             callback,
         });
 
-        this.event$[name].sort((a, b) => a.priority - b.priority);
+        this.event$[name].sort((a, b) => b.priority - a.priority);
     }
 
     emit(name, value) {
         const handlers = this.event$[name] || [];
 
+        const config = {
+            shouldStop: false,
+        };
+
         for (let i = 0; i < handlers.length; i++) {
             const handler = handlers[i];
-            const shouldBreak = !handler.callback(value);
+            handler.callback(value, config);
 
-            if (name === 'mousemove') {
-                console.info('#mousemove', shouldBreak);
-            }
-
-            if (shouldBreak) {
+            if (config.shouldStop) {
                 break;
             }
         }
