@@ -1,5 +1,7 @@
 import Grid from "./Grid";
 import Scrollbar from "./Scrollbar";
+import SelectionRect from "./SelectionRect";
+import ExpandIndicator from "./ExpandIndicator.js";
 
 export default class Renderer {
     constructor(context) {
@@ -9,8 +11,14 @@ export default class Renderer {
             // 画Grid
             new Grid(context),
             new Scrollbar(context),
-            // 画其他， 预留
+            new SelectionRect(context),
+            new ExpandIndicator(context),
         ];
+    }
+
+    // 画其他， 预留
+    register(component) {
+        this.components.push(component);
     }
 
     paint(dataDeps) {

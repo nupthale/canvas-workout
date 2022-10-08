@@ -1,8 +1,8 @@
 // import {getScrollbarWidth } from "./utils/util";
 
 export const cellStyle = {
-    width: 150,
-    height: 40,
+    width: 120,
+    height: 35,
 }
 
 export const width = 1000;
@@ -17,3 +17,7 @@ export const containerPadding = 12;
 export const getTableViewWidth = () => width - containerPadding * 2;
 
 export const getTableViewHeight = () => height - containerPadding * 2;
+
+// 滚动条
+export const scrollbarSize = 9;
+export const minScrollbarSize = 20;

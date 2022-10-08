@@ -8,6 +8,8 @@ import Renderer from './renderer/Renderer';
 
 import EventRegistry from "./event/EventRegistry.js";
 
+import ExpandableSelection from "./selection/ExpandableSelection.js";
+
 import Config from "./data/Config";
 
 import {strokeColor} from "./meta.js";
@@ -29,6 +31,8 @@ export default class Stage {
 
         // 滑动窗口， 分别计算startRowIndex, endRowIndex; startColIndex、endColIndex， 根据startRowIndex，进行layout计算
         this.renderer = new Renderer(this.context);
+
+        this.selection = new ExpandableSelection(this);
 
         this.render();
     }
@@ -71,6 +75,7 @@ export default class Stage {
         this.$canvas.style.width = `${width}px`;
         this.$canvas.style.height = `${height}px`;
         this.$canvas.style.background = '#fff';
+        this.$canvas.style.cursor = 'cell';
 
         this.ctx.setTransform(PIXEL_RATIO, 0, 0 , PIXEL_RATIO, 0, 0);
         this.ctx.fillStyle = '#fff';
@@ -87,14 +92,45 @@ export default class Stage {
     }
 
     render() {
+        console.info('#render', this.selection);
+
         this.renderer.paint({
             scrollbar: this.context.viewport.scrollbar,
             rows: this.clippedData.clippedData,
             fixedRows: {
-                leftCorner: this.fixedData.leftCorderRows,
+                leftCorner: this.fixedData.leftCornerRows,
                 left: this.fixedData.fixedLeftRows,
                 header: this.fixedData.fixedHeaderRows,
-            }
+            },
+            selection: this.selection,
         });
+    }
+
+    update(props) {
+        const {
+            columns = [],
+            dataSource = [],
+            rowHeights,
+            colWidths,
+            fixedConfig,
+            shouldLayout,
+        } = props;
+
+        this.context.config = new Config({
+            dom: this.$canvas,
+            ...props,
+        });
+
+        if (shouldLayout) {
+            this.context.layout = new Layout(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig);
+        }
+
+        this.context.viewport.moveWindow();
+        this.context.viewport.scrollbar.update();
+
+        this.clippedData = new ClippedData(this.context);
+        this.fixedData = new FixedData(this.context);
+
+        this.render();
     }
 }

@@ -107,6 +107,8 @@ export default class Scrollbar {
         if (shouldRerender) {
             stage.render();
         }
+
+        return shouldRerender;
     }
 
     isHoverScrollbar(scrollbar, x, y) {
