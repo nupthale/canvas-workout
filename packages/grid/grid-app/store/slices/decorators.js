@@ -13,6 +13,14 @@ export const reducer = (state, action) => {
                 draft.decorators.background.push(action.payload);
             });
 
+        case 'changeBackgroundBatch':
+            // 没判重复
+            return produce(state, draft => {
+                action.payload.forEach(item => {
+                    draft.decorators.background.push(item);
+                });
+            });
+
         default:
             break;
     }

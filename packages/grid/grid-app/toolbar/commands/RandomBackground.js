@@ -33,17 +33,36 @@ export default class RandomBackground {
     initEvt() {
         this.dom.addEventListener('click', () => {
             const { selection } = this.grid;
-            const { activeCol } = selection;
+            const { activeCol, selectionCol } = selection;
 
             if (activeCol) {
+                const color = getRandomColor();
+
+                let startRowIndex = activeCol.rowIndex;
+                let startColIndex = activeCol.colIndex;
+                let endRowIndex = activeCol.rowIndex;
+                let endColIndex = activeCol.colIndex;
+
+                if (selectionCol) {
+                    endRowIndex = selectionCol.rowIndex;
+                    endColIndex = selectionCol.colIndex;
+                }
+
+                const payload = [];
+                for (let i = startRowIndex; i <= endRowIndex; i++) {
+                    for (let j = startColIndex; j <= endColIndex; j++) {
+                        payload.push({
+                            rowIndex: i,
+                            colIndex: j,
+                            color,
+                        });
+                    }
+                }
+
                 dispatch({
-                    type: 'changeBackground',
-                    payload: {
-                        rowIndex: activeCol.rowIndex,
-                        colIndex: activeCol.colIndex,
-                        color: getRandomColor(),
-                    },
-                });
+                    type: 'changeBackgroundBatch',
+                    payload,
+                })
             }
         });
     }
