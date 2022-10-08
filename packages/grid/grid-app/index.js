@@ -6,6 +6,8 @@ import Toolbar from "./toolbar/index.js";
 
 import {state$} from "./store/index.js";
 
+import * as data from "./store/data.js";
+
 export default class GridApp {
     constructor(props) {
         this.grid = this.initGrid(props);
@@ -48,8 +50,11 @@ export default class GridApp {
         state$.pipe(
             skip(1),
         ).subscribe(state => {
-            debugger;
-            this.grid.update(state);
+            this.grid.update({
+                columns: data.initialState.columns,
+                dataSource: data.initialState.dataSource,
+                ...state,
+            });
         });
     }
 }

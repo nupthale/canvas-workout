@@ -1,14 +1,13 @@
 import {BehaviorSubject} from "rxjs";
 
 import * as combineRanges from './slices/combineRanges.js';
-import * as data from "./slices/data.js";
 import * as decorators from "./slices/decorators.js";
 import * as fixed from "./slices/fixed.js";
 import * as size from "./slices/size.js";
 
+// 不能有大数据， 有大数据，immer会有长任务；
 const slices = [
     combineRanges,
-    data,
     decorators,
     fixed,
     size,
