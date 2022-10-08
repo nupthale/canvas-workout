@@ -8,7 +8,7 @@ export default class FixedData {
         this.fixedRightRows = [];
         this.fixedHeaderRows = [];
 
-        this.leftCorderRows = [];
+        this.leftCornerRows = [];
 
         this.update();
     }
@@ -52,6 +52,6 @@ export default class FixedData {
 
         this.fixedHeaderRows = this.getRows(0, header - 1, startColIndex, endColIndex + 1);
 
-        this.leftCorderRows = this.getRows(0, header - 1, 0, left);
+        this.leftCornerRows = this.getRows(0, header - 1, 0, left);
     }
 }

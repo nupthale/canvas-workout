@@ -18,9 +18,11 @@ importers:
 
   packages/grid:
     specifiers:
+      immer: ^9.0.15
       rxjs: ^7.5.7
       vite: ^3.1.0
     dependencies:
+      immer: 9.0.15
       rxjs: 7.5.7
     devDependencies:
       vite: 3.1.4
@@ -273,6 +275,10 @@ packages:
     dependencies:
       function-bind: 1.1.1
     dev: true
+
+  /immer/9.0.15:
+    resolution: {integrity: sha512-2eB/sswms9AEUSkOm4SbV5Y7Vmt/bKRwByd52jfLkW4OLYeaTP3EEiJ9agqU0O/tq6Dk62Zfj+TJSqfm1rLVGQ==}
+    dev: false
 
   /is-core-module/2.10.0:
     resolution: {integrity: sha512-Erxj2n/LDAZ7H8WNJXd9tw38GYM3dv8rk8Zcs+jJuxYTW7sozH+SS8NtrSjVL1/vpLvWi1hxy96IzjJ3EHTJJg==}

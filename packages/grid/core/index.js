@@ -91,10 +91,38 @@ export default class Stage {
             scrollbar: this.context.viewport.scrollbar,
             rows: this.clippedData.clippedData,
             fixedRows: {
-                leftCorner: this.fixedData.leftCorderRows,
+                leftCorner: this.fixedData.leftCornerRows,
                 left: this.fixedData.fixedLeftRows,
                 header: this.fixedData.fixedHeaderRows,
             }
         });
+    }
+
+    update(props) {
+        const {
+            columns = [],
+            dataSource = [],
+            rowHeights,
+            colWidths,
+            fixedConfig,
+            shouldLayout,
+        } = props;
+
+        this.context.config = new Config({
+            dom: this.$canvas,
+            ...props,
+        });
+
+        if (shouldLayout) {
+            this.context.layout = new Layout(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig);
+        }
+
+        this.context.viewport.moveWindow();
+        this.context.viewport.scrollbar.update();
+
+        this.clippedData = new ClippedData(this.context);
+        this.fixedData = new FixedData(this.context);
+
+        this.render();
     }
 }
