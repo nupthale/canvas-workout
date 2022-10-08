@@ -36,3 +36,9 @@ export const isPositionedNode = (element) => {
 
     return style.position !== 'static';
 }
+
+export const isOverflowNode = (element) => {
+    const style = element.getComputedStyle();
+
+    return style.overflow === 'auto';
+}

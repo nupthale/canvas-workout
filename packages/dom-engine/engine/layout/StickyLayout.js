@@ -1,50 +1,49 @@
 import LayoutBase from './LayoutBase';
-import {isPositionedNode} from "./util";
+import {isOverflowNode} from "./util";
 
 // @todo
 export default class StickyLayout extends LayoutBase {
     constructor(element) {
         super(element);
 
-        this.positionedParent = null;
+        this.overflowParent = null;
     }
 
-    getPositionedParent() {
-        if (this.positionedParent) {
-            return this.positionedParent;
+    getOverflowParent() {
+        if (this.overflowParent) {
+            return this.overflowParent;
         }
 
         let node = this.element.parent;
         while(node) {
-            if (isPositionedNode(node)) {
-                this.positionedParent = node;
+            if (isOverflowNode(node)) {
+                this.overflowParent = node;
                 break;
             }
             node = node.parent;
         }
 
-        return this.positionedParent;
+        return this.overflowParent;
     }
 
     layoutX(parentX, elementStyle) {
-        const parent = this.getPositionedParent();
+        const overflowParent = this.getOverflowParent();
 
-        const parentScrollLeft = parent?.scrollLeft || 0;
-        const parentLayout = parent.getLayout();
-
-        // console.info(parent, parentLayout, parentScrollLeft);
-
-        console.info(elementStyle.left, parentX, parentLayout);
+        const overflowParentLayout = overflowParent.getLayout();
 
         if (elementStyle.left && parentX < 0) {
-            return elementStyle.left;
+            return elementStyle.left + overflowParentLayout.x;
         }
         return parentX + elementStyle.left;
     }
 
     layoutY(parentY, elementStyle) {
+        const overflowParent = this.getOverflowParent();
+
+        const overflowParentLayout = overflowParent.getLayout();
+
         if (elementStyle.top && parentY < 0) {
-            return elementStyle.top;
+            return elementStyle.top + overflowParentLayout.y;
         }
         return parentY + elementStyle.top;
     }

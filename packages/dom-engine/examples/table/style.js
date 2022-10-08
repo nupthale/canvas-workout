@@ -33,6 +33,8 @@ export const style = {
         backgroundColor: '#fff',
     },
     thead: {
+        position: 'sticky',
+        top: 1,
         width: tableWidth,
         height: cellStyle.height,
         padding: [0, 0, 0, 0],
