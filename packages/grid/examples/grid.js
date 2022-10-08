@@ -1,4 +1,4 @@
-import Grid from "../core/index";
+import Grid from "../grid-core/index";
 
 import {columns, dataSource} from "./mock.js";
 

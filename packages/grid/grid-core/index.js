@@ -8,6 +8,8 @@ import Renderer from './renderer/Renderer';
 
 import EventRegistry from "./event/EventRegistry.js";
 
+import Selection from "./selection/Selection.js";
+
 import Config from "./data/Config";
 
 import {strokeColor} from "./meta.js";
@@ -29,6 +31,8 @@ export default class Stage {
 
         // 滑动窗口， 分别计算startRowIndex, endRowIndex; startColIndex、endColIndex， 根据startRowIndex，进行layout计算
         this.renderer = new Renderer(this.context);
+
+        this.selection = new Selection(this);
 
         this.render();
     }
@@ -94,7 +98,8 @@ export default class Stage {
                 leftCorner: this.fixedData.leftCornerRows,
                 left: this.fixedData.fixedLeftRows,
                 header: this.fixedData.fixedHeaderRows,
-            }
+            },
+            selection: this.selection,
         });
     }
 
