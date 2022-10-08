@@ -1,5 +1,4 @@
 import {drawLine, drawRect, shadowRect} from "../utils/draw";
-import StickyLayout from "../layout/StickyLayout";
 
 export default class ElementRender {
     constructor(ctx, element, overflowParent) {
@@ -8,38 +7,16 @@ export default class ElementRender {
         this.overflowParent = overflowParent;
     }
 
-    getStartY (layout, margin) {
-        const { y } = layout;
-        const { scrollTop } = this.overflowParent || {};
-
-        if (layout instanceof StickyLayout) {
-            return y;
-        }
-
-        return y + (margin.top || 0) - (scrollTop || 0);
-    }
-
-    getStartX (layout, margin) {
-        const { x } = layout;
-        const { scrollLeft } = this.overflowParent || {};
-
-        if (layout instanceof StickyLayout) {
-            console.info(scrollLeft, x);
-            return x;
-        }
-
-        return x + (margin.left || 0) - (scrollLeft || 0);
-    }
-
     renderBox() {
         const element = this.element;
         const style = element.getComputedStyle();
         const layout = element.getLayout();
 
         const { backgroundColor, border, margin, width, height } = style;
+        const { x, y } = layout;
 
-        const startX = this.getStartX(layout, margin);
-        const startY = this.getStartY(layout, margin);
+        const startX = x + margin.left || 0;
+        const startY = y + margin.top || 0;
         const rectWidth = width - (margin.left || 0) - (margin.right || 0);
         const rectHeight = height - (margin.top || 0) - (margin.bottom || 0);
 

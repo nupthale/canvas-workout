@@ -58,7 +58,7 @@ export default function tableExample(mountId) {
         <view style={style.container}>
             <view style={{ boxShadow: [] }}>
                 <scrollable scrollWidth={tableWidth} scrollHeight={tableHeight} onScroll={() => {
-                    stage.repaint()
+                    stage.reflow()
                 }}>
                     <view style={style.table}>
                         {getTHead()}
