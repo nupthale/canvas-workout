@@ -20,6 +20,10 @@ export default class EventBus {
             const handler = handlers[i];
             const shouldBreak = !handler.callback(value);
 
+            if (name === 'mousemove') {
+                console.info('#mousemove', shouldBreak);
+            }
+
             if (shouldBreak) {
                 break;
             }

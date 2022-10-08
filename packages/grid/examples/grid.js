@@ -57,48 +57,48 @@ export default function gridExample(canvasId) {
         return `rgb(${r},${g},${b}, 0.4)`; //返回rgb(r,g,b)格式颜色
     }
 
-    setInterval(() => {
-        const randomColor1 = getRandomColor();
-        const randomColor2 = getRandomColor();
-        const rangeRandomNumber = Math.floor(9 * Math.random()) + 3;
-
-        grid.update({
-            columns,
-            dataSource,
-            fixedConfig: {
-                left: 1,
-                header: 1,
-            },
-            colWidths: {
-                0: 50,
-                1: 60,
-                7: 60,
-            },
-            rowHeights: {
-                3: 200,
-            },
-            combineRanges: [
-                { start: [3, 3], end: [3, rangeRandomNumber] }
-            ],
-            decorators: {
-                background: [{
-                    rowIndex: 3,
-                    colIndex: 3,
-                    color: randomColor2,
-                }, {
-                    rowIndex: 6,
-                    colIndex: 6,
-                    color: randomColor1,
-                }, {
-                    rowIndex: 7,
-                    colIndex: 6,
-                    color: randomColor1,
-                }, {
-                    rowIndex: 8,
-                    colIndex: 6,
-                    color: randomColor1,
-                }]
-            }
-        });
-    }, 1500);
+    // setInterval(() => {
+    //     const randomColor1 = getRandomColor();
+    //     const randomColor2 = getRandomColor();
+    //     const rangeRandomNumber = Math.floor(9 * Math.random()) + 3;
+    //
+    //     grid.update({
+    //         columns,
+    //         dataSource,
+    //         fixedConfig: {
+    //             left: 1,
+    //             header: 1,
+    //         },
+    //         colWidths: {
+    //             0: 50,
+    //             1: 60,
+    //             7: 60,
+    //         },
+    //         rowHeights: {
+    //             3: 200,
+    //         },
+    //         combineRanges: [
+    //             { start: [3, 3], end: [3, rangeRandomNumber] }
+    //         ],
+    //         decorators: {
+    //             background: [{
+    //                 rowIndex: 3,
+    //                 colIndex: 3,
+    //                 color: randomColor2,
+    //             }, {
+    //                 rowIndex: 6,
+    //                 colIndex: 6,
+    //                 color: randomColor1,
+    //             }, {
+    //                 rowIndex: 7,
+    //                 colIndex: 6,
+    //                 color: randomColor1,
+    //             }, {
+    //                 rowIndex: 8,
+    //                 colIndex: 6,
+    //                 color: randomColor1,
+    //             }]
+    //         }
+    //     });
+    // }, 1500);
 }

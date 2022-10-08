@@ -1,6 +1,7 @@
 import Grid from "./Grid";
 import Scrollbar from "./Scrollbar";
 import SelectionRect from "./SelectionRect";
+import ExpandIndicator from "./ExpandIndicator.js";
 
 export default class Renderer {
     constructor(context) {
@@ -11,6 +12,7 @@ export default class Renderer {
             new Grid(context),
             new Scrollbar(context),
             new SelectionRect(context),
+            new ExpandIndicator(context),
         ];
     }
 

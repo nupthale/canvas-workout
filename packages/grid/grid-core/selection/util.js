@@ -14,3 +14,12 @@ export const findColByEvent = (data, eventX, eventY) => {
 
     return result;
 }
+
+export const getIndicatorBoundingRect = (activeCol) => {
+    return {
+        x: activeCol.x + activeCol.width - 5,
+        y: activeCol.y + activeCol.height - 5,
+        width: 10,
+        height: 10,
+    }
+}

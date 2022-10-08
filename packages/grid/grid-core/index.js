@@ -75,6 +75,7 @@ export default class Stage {
         this.$canvas.style.width = `${width}px`;
         this.$canvas.style.height = `${height}px`;
         this.$canvas.style.background = '#fff';
+        this.$canvas.style.cursor = 'cell';
 
         this.ctx.setTransform(PIXEL_RATIO, 0, 0 , PIXEL_RATIO, 0, 0);
         this.ctx.fillStyle = '#fff';
