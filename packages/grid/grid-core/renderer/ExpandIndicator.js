@@ -13,6 +13,10 @@ export default class ExpandIndicator {
         const activeCol = selection.activeCol;
         const selectionCol = selection.selectionCol;
 
+        if (!activeCol) {
+            return;
+        }
+
         if (activeCol) {
             const indicator = getIndicatorBoundingRect(activeCol, selectionCol);
 

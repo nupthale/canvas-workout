@@ -80,7 +80,7 @@ export default class Grid {
             this.ctx.fillStyle = col.background;
             this.ctx.fillRect(col.x + borderWidth, col.y + borderWidth, col.combineWidth - borderWidth * 2, col.combineHeight - borderWidth * 2);
 
-            this.ctx.fillStyle = '#333';
+            this.ctx.fillStyle = col.colIndex === 0 ? '#999' : '#333';
             this.ctx.fillText(config.getText(col.rowIndex, col.colIndex), col.x + col.combineWidth / 2, col.y + col.combineHeight / 2);
         }
     }
@@ -95,17 +95,21 @@ export default class Grid {
         }
     }
 
-    prepare() {
-        this.ctx.save();
-
-        const fontSize = '14px';
+    getFontArr() {
+        const fontSize = '12px';
         const fontFamily = 'SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace';
         const fontWeight = 'normal';
+
+        return [fontWeight, fontSize, fontFamily];
+    }
+
+    prepare() {
+        this.ctx.save();
 
         this.ctx.textAlign = 'center';
         this.ctx.fillStyle = '#000';
         // this.ctx.textBaseline = style.textBaseline;
-        this.ctx.font = [fontWeight, fontSize, fontFamily].join(' ');
+        this.ctx.font = this.getFontArr().join(' ');
     }
 
     render({ rows, fixedRows }) {

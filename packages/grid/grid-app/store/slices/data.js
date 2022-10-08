@@ -1,20 +1,9 @@
 import produce from "immer";
+import {columns, dataSource} from "../../../examples/mock.js";
 
-export const state = {
-    layout: {
-        rowCount: 0,
-        colCount: 0,
-        xMap: {
-            0: 0,
-        },
-        yMap: {
-            0: 0,
-        },
-        rowHeights: {},
-        colWidths: {},
-        totalWidth: 0,
-        totalHeight: 0,
-    }
+export const initialState = {
+    columns,
+    dataSource,
 };
 
 export const reducer = (state, action) => {

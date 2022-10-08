@@ -1,8 +1,8 @@
 // import {getScrollbarWidth } from "./utils/util";
 
 export const cellStyle = {
-    width: 150,
-    height: 40,
+    width: 120,
+    height: 35,
 }
 
 export const width = 1000;

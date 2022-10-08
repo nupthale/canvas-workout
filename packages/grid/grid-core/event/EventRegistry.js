@@ -14,19 +14,19 @@ export default class EventRegistry extends  EventBus{
             this.emit('click', e);
         });
 
-        document.body.addEventListener('mousedown', (e) => {
+        this.dom.addEventListener('mousedown', (e) => {
             this.emit('mousedown', e);
         });
 
-        document.body.addEventListener('mousemove', (e) => {
+        this.dom.addEventListener('mousemove', (e) => {
             this.emit('mousemove', e);
         });
 
-        document.body.addEventListener('mouseup', (e) => {
+        this.dom.addEventListener('mouseup', (e) => {
             this.emit('mouseup', e);
         });
 
-        document.body.addEventListener('mouseout', (e) => {
+        this.dom.addEventListener('mouseout', (e) => {
             this.emit('mouseout', e);
         });
     }

@@ -10,6 +10,10 @@ export default class SelectionRect {
         const activeCol = selection.activeCol;
         const selectionCol = selection.selectionCol;
 
+        if (!activeCol) {
+            return;
+        }
+
         const rect = {
             x: activeCol.x,
             y: activeCol.y,

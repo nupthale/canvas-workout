@@ -1,8 +1,5 @@
-export const state = {
-    fixedInfo: {
-        fixedLeftWidth: 0,
-        fixedHeaderHeight: 0,
-    }
+export const initialState = {
+    combineRanges: [],
 };
 
 export const reducer = (state, action) => {

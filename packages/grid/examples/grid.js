@@ -16,7 +16,7 @@ export default function gridExample(canvasId) {
         dataSource,
         fixedConfig: {
             left: 2,
-            header: 2,
+            header: 1,
         },
         colWidths: {
             0: 100,

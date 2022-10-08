@@ -8,7 +8,11 @@ export default class Layout {
         this.rowHeights = rowHeights || {};
         this.colWidths = colWidths || {};
 
-        this.fixedConfig = fixedConfig;
+        this.fixedConfig = fixedConfig || {
+            left: 0,
+            header: 0,
+            right: 0,
+        };
 
         this.xMap = {
             0: 0,
