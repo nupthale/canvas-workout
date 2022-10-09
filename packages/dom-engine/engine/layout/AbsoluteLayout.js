@@ -34,7 +34,7 @@ export default class AbsoluteLayout extends LayoutBase {
         const parentScrollLeft = parent?.scrollLeft || 0;
         const parentLayout = parent.getLayout();
 
-        return parentLayout.x + elementStyle.left - parentScrollLeft;
+        return parentLayout.x + elementStyle.left || 0 - parentScrollLeft;
     }
 
     layoutY(_parentY, elementStyle) {
@@ -46,7 +46,7 @@ export default class AbsoluteLayout extends LayoutBase {
         const parentScrollTop = parent?.scrollTop || 0;
         const parentLayout = parent.getLayout();
 
-        return parentLayout.y + elementStyle.top - parentScrollTop;
+        return parentLayout.y + elementStyle.top || 0 - parentScrollTop;
     }
 }
 
