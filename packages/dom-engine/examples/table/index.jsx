@@ -20,13 +20,54 @@ function getTHead() {
                     })
                 }
             </view>
+
+            <view style={{
+                position: 'sticky',
+                width: 100,
+                left: 1,
+            }}>
+                <view style={style.col}>
+                    <text>{columns[0].title}</text>
+                </view>
+            </view>
         </view>
     );
+}
+
+function getFixedLeft() {
+    return (
+        <view style={{
+            position: 'sticky',
+            left: 1,
+        }}>
+            {
+                dataSource.map((row, rowIndex) => {
+                    return (
+                        <view style={style.row}>
+                            {
+                                columns.filter(col => col.fixed === 'left').map((col, colIndex) => {
+                                    return (
+                                        <view style={{
+                                            ...style.col,
+                                            width: col.width || cellStyle.width,
+                                        }}>
+                                            <text>{dataSource[rowIndex][columns[colIndex].dataIndex]}</text>
+                                        </view>
+                                    );
+                                })
+                            }
+                        </view>
+                    );
+                })
+            }
+        </view>
+    )
 }
 
 function getTBody() {
     return (
         <view style={style.tbody}>
+            <view>
             {
                 dataSource.map((row, rowIndex) => {
                     return (
@@ -47,6 +88,9 @@ function getTBody() {
                     );
                 })
             }
+            </view>
+
+            {getFixedLeft()}
         </view>
     );
 }
@@ -58,7 +102,7 @@ export default function tableExample(mountId) {
         <view style={style.container}>
             <view style={{ boxShadow: [] }}>
                 <scrollable scrollWidth={tableWidth} scrollHeight={tableHeight} onScroll={() => {
-                    stage.repaint()
+                    stage.reflow()
                 }}>
                     <view style={style.table}>
                         {getTHead()}

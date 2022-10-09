@@ -40,32 +40,32 @@ export default class TextRender {
 
         switch(style.textAlign) {
             case 'center':
-                x = left + width / 2 - (this.overflowParent?.scrollLeft || 0);
+                x = left + width / 2;
                 ctx.textAlign = 'center';
                 break;
             case 'right':
-                x = left + width - style.padding.right - (this.overflowParent?.scrollLeft || 0);
+                x = left + width - style.padding.right;
                 ctx.textAlign = 'right';
                 break;
             case 'left':
             default:
-                x = left + style.padding.left - (this.overflowParent?.scrollLeft || 0);
+                x = left + style.padding.left;
                 ctx.textAlign = 'left';
                 break;
         }
 
         switch(style.verticalAlign) {
             case 'middle':
-                y = top + height / 2 - (this.overflowParent?.scrollTop || 0);
+                y = top + height / 2;
                 ctx.textBaseline = "middle";
                 break;
             case 'bottom':
-                y = top + height - (this.overflowParent?.scrollTop || 0);
+                y = top + height;
                 ctx.textBaseline = 'bottom';
                 break;
             case 'top':
             default:
-                y = top - (this.overflowParent?.scrollTop || 0);
+                y = top;
                 ctx.textBaseline = "top";
                 break;
         }

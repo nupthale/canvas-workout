@@ -2,84 +2,62 @@ import {isNumber} from "lodash-es";
 
 
 import {dfs} from "../utils/tree";
-import {isInView, isInOverflowBox, PIXEL_RATIO} from "../utils/util";
-
 
 import ElementRender from "./ElementRender";
 import TextRender from "./TextRender";
 
-let count = 0;
+import {shouldClipCtx} from "./util";
 
-// render尽量保持o(1)复杂度， 如果出现o(n)就会卡
-// 注意clip前必须beginPath,否则大量clip就卡死了: https://stackoverflow.com/questions/21160459/html-5-canvas-clip-very-costly
+
 export default class Render {
     constructor(ctx, rootLayer) {
         this.ctx = ctx;
         this.rootLayer = rootLayer;
 
-        this.paintRecords = [];
-
-        this._isPainting = false;
-
-        this.init();
+        this.opacityNodes = [];
+        this.overflowNodes = [];
     }
 
-    init() {
-        this.paintRecords = [];
+    paint() {
+        this.ctx.save();
 
         dfs(this.rootLayer, (layer) => {
             // 先渲染root, 再渲染nodes, 再渲染children
             const nodes = layer.nodes || [];
 
-            this.paintRecords.push(layer.rootNode);
-
-            nodes.forEach(node => {
-               this.paintRecords.push(node);
-            });
+            this.renderElement(layer.rootNode);
+            this.renderNodes(nodes);
         });
+
+        this.ctx.restore();
     }
 
-    paint() {
-        if (this._isPainting) {
-            return;
-        }
-
-        this._isPainting = true;
-        count = 0;
-
-        const me = this;
-        this.paintRecords.forEach(node => {
-            if (isInView(node, me.ctx)) {
-                if (node.isTextNode) {
-                    this.renderTextNode(node);
-                } else {
-                    this.renderElement(node);
-                }
+    renderNodes(nodes) {
+        nodes.forEach(node => {
+            if (node.isTextNode) {
+                this.renderTextNode(node);
+            } else {
+                this.renderElement(node);
             }
-        });
-
-        // console.info('#count', count);
-
-        this._isPainting = false;
-    }
-
-    makeOpacity(element) {
-        const style = element.getComputedStyle();
-
-        if (isNumber(style.opacity)) {
-            this.ctx.globalAlpha = style.opacity;
-        }
+        })
     }
 
     makeClip(element) {
-        const overflowParent = element.style.overflowParent;
+        if (this.overflowNodes?.length) {
+            const crtOverflowNode = this.overflowNodes[this.overflowNodes.length - 1];
 
-        if (overflowParent) {
-            const layout = overflowParent.getLayout();
-            const style = overflowParent.getComputedStyle();
+            if (!crtOverflowNode?.isChild(element)) {
+                this.ctx.restore();
 
-            // 重点,clip前必须beginPath,否则非常多clip的时候直接卡死
-            this.ctx.beginPath();
+                this.overflowNodes.pop();
+            }
+        }
+
+        if (shouldClipCtx(element)) {
+            const layout = element.getLayout();
+            const style = element.getComputedStyle();
+
+            this.ctx.save();
             this.ctx.rect(
                 layout.x,
                 layout.y,
@@ -87,39 +65,43 @@ export default class Render {
                 style.height,
             );
             this.ctx.clip();
+
+            this.overflowNodes.push(element);
         }
     }
 
+    makeOpacity(element) {
 
-    renderElement(element) {
-        const overflowParent = element.style.overflowParent;
-        if (overflowParent && !isInOverflowBox(overflowParent, element)) {
-            return;
+        if (this.opacityNodes?.length) {
+            const crtOpacityNode = this.opacityNodes[this.opacityNodes.length - 1];
+
+            if (!crtOpacityNode?.isChild(element)) {
+                this.ctx.restore();
+
+                this.opacityNodes.pop();
+            }
         }
 
-        count++;
+        const style = element.getComputedStyle();
+        if (isNumber(style.opacity) && style.opacity < 1) {
+            this.ctx.save();
+            this.ctx.globalAlpha = style.opacity;
 
-        this.ctx.save();
+            this.opacityNodes.push(element);
+        }
+    }
 
+    renderElement(element) {
         this.makeClip(element);
+
         this.makeOpacity(element);
 
-        const renderer = new ElementRender(this.ctx, element, overflowParent);
+        const renderer = new ElementRender(this.ctx, element);
         renderer.render();
-
-        this.ctx.restore();
     }
 
     renderTextNode(node) {
-        this.ctx.save();
-
-        this.makeClip(node.parent);
-        this.makeOpacity(node.parent);
-
-        const overflowParent = node.parent.style.overflowParent;
-        const renderer = new TextRender(this.ctx, node, overflowParent);
+        const renderer = new TextRender(this.ctx, node);
         renderer.render();
-
-        this.ctx.restore();
     }
 }
