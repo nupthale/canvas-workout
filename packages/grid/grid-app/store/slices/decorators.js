@@ -1,5 +1,8 @@
 import produce from "immer";
 
+import { sendToServer } from "../../collaboration/index.js";
+
+
 export const initialState = {
     decorators: {
         background: [],
@@ -19,6 +22,8 @@ export const reducer = (state, action) => {
                 action.payload.forEach(item => {
                     draft.decorators.background.push(item);
                 });
+            }, async (patches, inversePatches) => {
+                await sendToServer(patches);
             });
 
         default:
