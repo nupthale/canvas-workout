@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: LarkHackSafariFont,LarkEmojiFont,-apple-system,BlinkMacSystemFont,Helvetica Neue,Arial,Segoe UI,PingFang SC,Microsoft Yahei,Hiragino Sans GB,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -29,17 +29,16 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #fff;
+  background: #EAE7F1;
 }
 
 .grid-card {
-  height: calc(100vh - 40px);
-  margin: 20px;
+  height: calc(100vh);
   background: transparent;
 }
 
 #canvas {
-  box-shadow: 0 7px 29px rgba(100, 100, 111, 0.2);
+  /*box-shadow: 0 7px 29px rgba(100, 100, 111, 0.2);*/
 }
 
 #toolbar {
@@ -47,11 +46,10 @@ html, body {
   align-items: center;
   padding: 0 20px;
 
-  background: #fff;
+  background: #FDFDFD;
   height: 40px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  /*border: 1px solid #eee;*/
+  border-radius: 6px;
+  border-bottom: 1px solid #DBDCE5;
   box-shadow: 0 7px 29px rgba(100, 100, 111, 0.2);
 }
 
@@ -60,14 +58,26 @@ html, body {
   padding: 2px 10px;
   align-items: center;
   color: #333;
-  border-radius: 10px;
+  border-radius: 2px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
   user-select: none;
 }
 
+.command svg {
+  font-size: 18px;
+}
+
 .command:hover {
-  background-color: #eee;
+  background-color: #EEEFF8;
+}
+
+.divider {
+  width: 1px;
+  height: 18px;
+  background: #DBDCE5;
+  border-radius: 4px;
+  margin: 0 4px;
 }
 
 h1 {

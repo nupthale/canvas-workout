@@ -15,8 +15,12 @@ export default class Toolbar {
     initDom() {
         const fragment = document.createDocumentFragment();
 
+        const divider = document.createElement('div');
+        divider.classList.add('divider');
+
         this.commands.forEach(command => {
             fragment.appendChild(command.dom);
+            fragment.appendChild(divider);
         });
 
         this.$toolbar.appendChild(fragment);
