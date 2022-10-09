@@ -1,5 +1,4 @@
-
-import {drawLine, drawText, drawRect, shadowRect, clipRect} from "../utils/draw.js";
+import {shadowRect, clipRect} from "../utils/draw.js";
 import {strokeColor, borderWidth} from "../meta.js";
 
 export default class Grid {

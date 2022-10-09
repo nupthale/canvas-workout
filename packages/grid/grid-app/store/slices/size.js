@@ -1,6 +1,9 @@
+const width = document.documentElement.clientWidth;
+const height = document.documentElement.clientHeight - 40;
+
 export const initialState = {
-    width: 0,
-    height: 0,
+    width,
+    height,
     colWidths: {
         0: 100,
         1: 60,

@@ -92,8 +92,6 @@ export default class Stage {
     }
 
     render() {
-        console.info('#render', this.selection);
-
         this.renderer.paint({
             scrollbar: this.context.viewport.scrollbar,
             rows: this.clippedData.clippedData,
@@ -108,6 +106,8 @@ export default class Stage {
 
     update(props) {
         const {
+            width,
+            height,
             columns = [],
             dataSource = [],
             rowHeights,
@@ -123,13 +123,17 @@ export default class Stage {
 
         if (shouldLayout) {
             this.context.layout.update(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig);
+
+            this.context.viewport.update({
+                width,
+                height,
+                scrollWidth: this.context.layout.totalWidth,
+                scrollHeight: this.context.layout.totalHeight,
+            });
+
+            this.clippedData = new ClippedData(this.context);
+            this.fixedData = new FixedData(this.context);
         }
-
-        this.context.viewport.moveWindow();
-        this.context.viewport.scrollbar.update();
-
-        this.clippedData = new ClippedData(this.context);
-        this.fixedData = new FixedData(this.context);
 
         this.render();
     }

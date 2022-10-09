@@ -13,7 +13,7 @@ export const PIXEL_RATIO = (() => {
 
 export const isEventInView = (x, y, view) => {
     return (
-        (x > view.x && x < view.x + view.width) &&
-        (y > view.y && y < view.y + view.height)
+        (x >= view.x && x <= view.x + view.width) &&
+        (y >= view.y && y <= view.y + view.height)
     );
 }

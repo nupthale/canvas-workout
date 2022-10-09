@@ -164,4 +164,18 @@ export default class Viewport extends Scrollable {
         this.updateEndRowIndex();
         this.updateEndColIndex();
     }
+
+    update({ width, height, scrollWidth, scrollHeight }) {
+        this.width = width;
+        this.height = height;
+        this.scrollWidth = scrollWidth;
+        this.scrollHeight = scrollHeight;
+
+        this.isHorizontalScrollable = scrollWidth > width;
+        this.isVerticalScrollable = scrollHeight > height;
+
+        this.moveWindow();
+
+        this.scrollbar.update();
+    }
 }

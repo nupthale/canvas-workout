@@ -50,7 +50,6 @@ export default class Selection {
                 result = clickedCol;
                 break;
             }
-
         }
 
         return result;

@@ -49,6 +49,12 @@ export default class ExpandableSelection extends Selection {
 
             if (this.isExpanding) {
                 this.selectionCol = this.getCol(eventX, eventY);
+                if (!this.selectionCol) {
+                    debugger;
+                }
+
+                console.info('#selectionCol', this.selectionCol);
+
                 this.stage.render();
             } else {
                 // hover
