@@ -4,7 +4,7 @@ import {skip} from "rxjs";
 import Grid from "../grid-core/index";
 import Toolbar from "./toolbar/index.js";
 
-import {state$} from "./store/index.js";
+import {state$, dispatch} from "./store/index.js";
 
 import * as data from "./store/data.js";
 
@@ -57,5 +57,11 @@ export default class GridApp {
                 shouldLayout: true,
             });
         });
+
+        window.onresize = () => {
+            dispatch({
+                type: 'windowResize',
+            });
+        }
     }
 }

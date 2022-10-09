@@ -1,3 +1,5 @@
+import produce from "immer";
+
 const width = document.documentElement.clientWidth;
 const height = document.documentElement.clientHeight - 40;
 
@@ -16,9 +18,11 @@ export const initialState = {
 
 export const reducer = (state, action) => {
     switch(action.type) {
-        case '':
-            break;
-
+        case 'windowResize':
+            return produce(state, draft => {
+                draft.width = document.documentElement.clientWidth;
+                draft.height = document.documentElement.clientHeight - 40;
+            });
         default:
             break;
     }
