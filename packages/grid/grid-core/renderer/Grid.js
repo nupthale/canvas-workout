@@ -60,8 +60,8 @@ export default class Grid {
         if (!col.isCombined || col.isCombinedStart) {
             this.ctx.beginPath();
             // 画底层白色, 防止透明
-            // this.ctx.fillStyle = '#fff';
-            // this.ctx.fillRect(col.x + borderWidth, col.y + borderWidth, col.combineWidth - borderWidth * 2, col.combineHeight - borderWidth * 2);
+            this.ctx.fillStyle = '#fff';
+            this.ctx.fillRect(col.x, col.y, col.combineWidth, col.combineHeight);
 
             // 画上层背景
             this.ctx.fillStyle = col.background;

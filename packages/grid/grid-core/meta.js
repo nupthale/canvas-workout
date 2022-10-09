@@ -6,7 +6,7 @@ export const cellStyle = {
 }
 
 export const width = 1000;
-export const height = 500;
+export const height = 300;
 
 export const strokeColor = '#e8ebed';
 
