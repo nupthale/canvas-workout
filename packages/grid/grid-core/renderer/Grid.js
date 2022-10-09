@@ -60,12 +60,14 @@ export default class Grid {
         if (!col.isCombined || col.isCombinedStart) {
             this.ctx.beginPath();
             // 画底层白色, 防止透明
-            this.ctx.fillStyle = '#fff';
+            this.ctx.fillStyle = (col.rowIndex === 0 || col.colIndex === 0) ? '#F5F6F7' : '#fff';
             this.ctx.fillRect(col.x, col.y, col.combineWidth, col.combineHeight);
 
             // 画上层背景
-            this.ctx.fillStyle = col.background;
-            this.ctx.fillRect(col.x, col.y, col.combineWidth, col.combineHeight);
+            if (col.background) {
+                this.ctx.fillStyle = col.background;
+                this.ctx.fillRect(col.x, col.y, col.combineWidth, col.combineHeight);
+            }
 
             this.ctx.fillStyle = col.colIndex === 0 ? '#999' : '#333';
             this.ctx.fillText(config.getText(col.rowIndex, col.colIndex), col.x + col.combineWidth / 2, col.y + col.combineHeight / 2);

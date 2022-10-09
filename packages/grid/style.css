@@ -29,7 +29,6 @@ html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #EAE7F1;
 }
 
 .grid-card {
@@ -65,7 +64,7 @@ html, body {
 }
 
 .command svg {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .command:hover {

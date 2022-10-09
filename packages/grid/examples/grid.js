@@ -5,8 +5,8 @@ import {columns, dataSource} from "./mock.js";
 export default function gridExample(canvasId) {
     const $canvas = document.getElementById(canvasId);
 
-    const width = document.documentElement.clientWidth - 40;
-    const height = document.documentElement.clientHeight - 120;
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight - 40;
 
     const grid = new Grid({
         $canvas,

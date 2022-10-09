@@ -14,6 +14,6 @@ export default class DecoratedCol extends CombinableCol {
             return item.rowIndex === rowIndex && item.colIndex === colIndex;
         });
 
-        return config?.color || '#fff';
+        return config?.color;
     }
 }
