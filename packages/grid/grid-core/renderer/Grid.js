@@ -56,6 +56,21 @@ export default class Grid {
         this.ctx.strokeStyle = strokeColor;
         this.ctx.lineWidth = borderWidth;
 
+        // 画内容
+        if (!col.isCombined || col.isCombinedStart) {
+            this.ctx.beginPath();
+            // 画底层白色, 防止透明
+            // this.ctx.fillStyle = '#fff';
+            // this.ctx.fillRect(col.x + borderWidth, col.y + borderWidth, col.combineWidth - borderWidth * 2, col.combineHeight - borderWidth * 2);
+
+            // 画上层背景
+            this.ctx.fillStyle = col.background;
+            this.ctx.fillRect(col.x, col.y, col.combineWidth, col.combineHeight);
+
+            this.ctx.fillStyle = col.colIndex === 0 ? '#999' : '#333';
+            this.ctx.fillText(config.getText(col.rowIndex, col.colIndex), col.x + col.combineWidth / 2, col.y + col.combineHeight / 2);
+        }
+
         // 画横线
         if (!col.isCombined || col.isCombinedLastRow) {
             this.ctx.moveTo(col.x, col.y + col.height);
@@ -69,20 +84,6 @@ export default class Grid {
         }
 
         this.ctx.stroke();
-
-
-
-
-        // 画内容
-        if (!col.isCombined || col.isCombinedStart) {
-            // 画背景
-            this.ctx.beginPath();
-            this.ctx.fillStyle = col.background;
-            this.ctx.fillRect(col.x + borderWidth, col.y + borderWidth, col.combineWidth - borderWidth * 2, col.combineHeight - borderWidth * 2);
-
-            this.ctx.fillStyle = col.colIndex === 0 ? '#999' : '#333';
-            this.ctx.fillText(config.getText(col.rowIndex, col.colIndex), col.x + col.combineWidth / 2, col.y + col.combineHeight / 2);
-        }
     }
 
     renderRows(rows) {
@@ -93,6 +94,22 @@ export default class Grid {
                 this.renderCol(col);
             }
         }
+    }
+
+    renderCenterRows(rows) {
+        // 先clip
+        const { viewport, layout } = this.context;
+
+        clipRect(
+            this.ctx,
+            layout.fixedLeftWidth,
+            layout.fixedHeaderHeight,
+            viewport.width - layout.fixedLeftWidth,
+            viewport.height - layout.fixedHeaderHeight,
+            () => {
+                this.renderRows(rows);
+            }
+        );
     }
 
     getFontArr() {
@@ -115,7 +132,7 @@ export default class Grid {
     render({ rows, fixedRows }) {
         this.prepare();
 
-        this.renderRows(rows);
+        this.renderCenterRows(rows);
         this.renderFixed(fixedRows);
 
         this.ctx.restore();

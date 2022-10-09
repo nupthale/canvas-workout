@@ -70,10 +70,10 @@ export default class Layout {
 
     // 如果优化，可以做成cache，用到的时候计算， 不用第一次全部计算；目前100w条 ，耗时80+ms，虽然长任务，但是可以接受；
     init() {
-        this.update();
+        this.updateXY();
     }
 
-    update() {
+    updateXY() {
         for (let i = 1; i < this.rowCount; i++) {
             this.yMap[i] = this.yMap[i - 1] + this.getRowHeight(i - 1);
         }
@@ -89,5 +89,27 @@ export default class Layout {
 
     getY(rowIndex) {
         return this.yMap[rowIndex];
+    }
+
+    update(rowCount, colCount, rowHeights, colWidths, fixedConfig) {
+        this.rowCount = rowCount;
+        this.colCount = colCount;
+
+        this.rowHeights = rowHeights || {};
+        this.colWidths = colWidths || {};
+
+        this.fixedConfig = fixedConfig || {
+            left: 0,
+            header: 0,
+            right: 0,
+        };
+
+
+
+        this.totalWidth = this._getTotalWidth();
+        this.totalHeight = this._getTotalHeight();
+
+        this.updateXY();
+        this.initFixedWidth();
     }
 }

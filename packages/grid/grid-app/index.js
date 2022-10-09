@@ -54,6 +54,7 @@ export default class GridApp {
                 columns: data.initialState.columns,
                 dataSource: data.initialState.dataSource,
                 ...state,
+                shouldLayout: true,
             });
         });
     }

@@ -122,7 +122,7 @@ export default class Stage {
         });
 
         if (shouldLayout) {
-            this.context.layout = new Layout(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig);
+            this.context.layout.update(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig);
         }
 
         this.context.viewport.moveWindow();

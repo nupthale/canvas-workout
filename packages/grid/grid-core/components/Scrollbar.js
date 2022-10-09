@@ -52,8 +52,6 @@ export default class Scrollbar {
         });
 
         event$.on('mouseup', this.endScroll.bind(this));
-
-        event$.on('mouseout', this.endScroll.bind(this));
     }
 
     endScroll() {
@@ -66,6 +64,7 @@ export default class Scrollbar {
             maxScrollLeft,
             maxScrollTop,
         } = this.context.viewport;
+
 
         if (this.hScrollbar.isScroll) {
             // const x = (scrollLeft / maxScrollLeft) * (width - this.hScrollbar.width)

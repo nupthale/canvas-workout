@@ -18,15 +18,17 @@ export default class EventRegistry extends  EventBus{
             this.emit('mousedown', e);
         });
 
-        this.dom.addEventListener('mousemove', (e) => {
+        // 不用document.body， 在canvas外部， 就监听不到；
+        document.body.addEventListener('mousemove', (e) => {
             this.emit('mousemove', e);
         });
 
-        this.dom.addEventListener('mouseup', (e) => {
+        // 这里必须用window，用document或者dom都会造成滚动条问题： 如果滚动到屏幕外， 就不会触发mouseup了；
+        window.addEventListener('mouseup', (e) => {
             this.emit('mouseup', e);
         });
 
-        this.dom.addEventListener('mouseout', (e) => {
+        document.body.addEventListener('mouseout', (e) => {
             this.emit('mouseout', e);
         });
     }
