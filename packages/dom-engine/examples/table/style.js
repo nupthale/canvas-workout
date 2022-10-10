@@ -34,8 +34,7 @@ export const style = {
     },
     thead: {
         position: 'sticky',
-        top: 1,
-        left: 0,
+        top: 0,
         width: tableWidth,
         height: cellStyle.height,
         padding: [0, 0, 0, 0],

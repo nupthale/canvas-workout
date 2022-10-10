@@ -1,6 +1,6 @@
 import LayoutBase from './LayoutBase';
 import {isOverflowNode} from "./util";
-import {isNil} from "lodash-es";
+import {isNumber} from "lodash-es";
 
 // @todo
 export default class StickyLayout extends LayoutBase {
@@ -32,10 +32,10 @@ export default class StickyLayout extends LayoutBase {
 
         const overflowParentLayout = overflowParent.getLayout();
 
-        if (elementStyle.left && parentX < 0) {
+        if (isNumber(elementStyle.left) && parentX < 0) {
             return elementStyle.left + overflowParentLayout.x;
         }
-        return parentX + elementStyle.left || 0;
+        return parentX;
     }
 
     layoutY(parentY, elementStyle) {
@@ -43,13 +43,11 @@ export default class StickyLayout extends LayoutBase {
 
         const overflowParentLayout = overflowParent.getLayout();
 
-        console.info('elementStyle: ', elementStyle.top, parentY, !isNil(elementStyle.top));
-
-        if (elementStyle.top && parentY < 0) {
+        if (isNumber(elementStyle.top) && parentY < 0) {
             return elementStyle.top + overflowParentLayout.y;
         }
 
-        return parentY + elementStyle.top || 0;
+        return parentY;
     }
 }
 
