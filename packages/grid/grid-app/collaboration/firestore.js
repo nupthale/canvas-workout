@@ -3,7 +3,7 @@ import { getFirestore, doc, onSnapshot, runTransaction, collection, query, getDo
 
 import {dispatch} from "../store/index.js";
 
-
+// 废弃， firestore有明显延迟；还有没有center server做冲突合并；
 const firebaseConfig = {
     apiKey: "AIzaSyCd4dolmxFwcE-YURhYfjkFq1H4JfMQk6c",
     authDomain: "canvas-workout.firebaseapp.com",

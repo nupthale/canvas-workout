@@ -1,7 +1,6 @@
 import produce from "immer";
 
-import { sendToServer } from "../../collaboration/index.js";
-
+import { sendToServer } from "../../collaboration/firestore.js";
 
 export const initialState = {
     decorators: {
