@@ -39,6 +39,7 @@ export const style = {
         height: cellStyle.height,
         padding: [0, 0, 0, 0],
         border: [],
+        boxShadow: [0, 8, 8, '#eee'],
         zIndex: 3,
     },
     tbody: {

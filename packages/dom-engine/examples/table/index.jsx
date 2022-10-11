@@ -50,6 +50,7 @@ function getFixedLeft() {
                                         <view style={{
                                             ...style.col,
                                             width: col.width || cellStyle.width,
+                                            boxShadow: [8, 0, 8, '#eee'],
                                         }}>
                                             <text>{dataSource[rowIndex][columns[colIndex].dataIndex]}</text>
                                         </view>
