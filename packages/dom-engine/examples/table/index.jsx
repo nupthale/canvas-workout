@@ -23,9 +23,8 @@ function getTHead() {
 
             <view style={{
                 position: 'sticky',
-                width: 100,
-                left: 1,
-                top: 0,
+                width: columns[0].width || cellStyle.width,
+                left: 0,
             }}>
                 <view style={style.col}>
                     <text>{columns[0].title}</text>
@@ -39,8 +38,7 @@ function getFixedLeft() {
     return (
         <view style={{
             position: 'sticky',
-            left: 1,
-            top: 0,
+            left: 0,
         }}>
             {
                 dataSource.map((row, rowIndex) => {
