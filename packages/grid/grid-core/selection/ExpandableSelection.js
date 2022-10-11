@@ -23,7 +23,7 @@ export default class ExpandableSelection extends Selection {
 
     initIndicatorEvt() {
         const { context } = this.stage;
-        const { event$, dom } = context;
+        const { event$, dom, viewport } = context;
 
         const {left, top} = dom.getBoundingClientRect();
 
@@ -48,7 +48,8 @@ export default class ExpandableSelection extends Selection {
             const eventY = e.clientY - top;
 
             if (this.isExpanding) {
-                this.selectionCol = this.getCol(eventX, eventY);
+                const { scrollTop } = viewport
+                this.selectionCol = this.getCol(eventX, eventY, scrollTop);
                 if (!this.selectionCol) {
                     debugger;
                 }
