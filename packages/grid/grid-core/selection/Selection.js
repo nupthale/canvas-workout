@@ -29,8 +29,15 @@ export default class Selection {
         }
     }
 
-    getCol(eventX, eventY) {
+    getCol(eventX, eventY, scrollTop) {
         const { clippedData, fixedData } = this.stage;
+
+        const clippedDataProcess = clippedData.clippedData.map(data => {
+            return {
+                ...data,
+                y: data.y - scrollTop
+            }
+        })
 
         // 先找fixed， 没找到再找clipped
         const rows = [
@@ -38,7 +45,7 @@ export default class Selection {
             fixedData.fixedLeftRows,
             fixedData.leftCornerRows,
             fixedData.fixedRightRows,
-            clippedData.clippedData,
+            clippedDataProcess,
         ];
 
         // 先找fixed， 没找到再找clipped
@@ -57,14 +64,15 @@ export default class Selection {
 
     initSelectionEvt() {
         const { context } = this.stage;
-        const { event$, dom } = context;
+        const { event$, dom, viewport } = context;
 
         event$.on('mousedown', (e) => {
             const {left, top} = dom.getBoundingClientRect();
+            const { scrollTop } = viewport
             const eventX = e.clientX - left;
             const eventY = e.clientY - top;
 
-            this.activeCol = this.getCol(eventX, eventY);
+            this.activeCol = this.getCol(eventX, eventY, scrollTop);
             this.stage.render();
         });
     }
