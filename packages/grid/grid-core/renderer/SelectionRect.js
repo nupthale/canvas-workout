@@ -33,8 +33,8 @@ export default class SelectionRect {
         }
 
         if (selectionCol) {
-            rect.width = selectionCol.x + selectionCol.width - activeCol.x;
-            rect.height = selectionCol.y + selectionCol.height - activeCol.y;
+            rect.width = selectionCol.x + selectionCol.width - rect.x;
+            rect.height = selectionCol.y + selectionCol.height - rect.y;
         }
 
         if (activeCol) {
