@@ -1,7 +1,5 @@
 import {dispatch} from "../../store/index.js";
 
-import { getMax, getMin } from './utils';
-
 export default class MergeCells {
     constructor(grid) {
         this.dom = this.initDom();
@@ -54,8 +52,8 @@ export default class MergeCells {
                     })
                 } else {
                     const newPayload = {
-                        start: [getMin(startRowIndex, combineRange.start[0]), getMin(startColIndex, combineRange.start[1])],
-                        end: [getMax(endRowIndex, combineRange.end[0]), getMax(endColIndex, combineRange.end[1])]
+                        start: [Math.min(startRowIndex, combineRange.start[0]), Math.min(startColIndex, combineRange.start[1])],
+                        end: [Math.max(endRowIndex, combineRange.end[0]), Math.max(endColIndex, combineRange.end[1])]
                     }
 
                     dispatch({
