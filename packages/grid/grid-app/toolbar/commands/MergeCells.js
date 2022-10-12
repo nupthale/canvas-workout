@@ -1,5 +1,7 @@
 import {dispatch} from "../../store/index.js";
 
+import { hasRelation } from './utils'
+
 export default class MergeCells {
     constructor(grid) {
         this.dom = this.initDom();
@@ -22,8 +24,9 @@ export default class MergeCells {
 
     initEvt() {
         this.dom.addEventListener('click', () => {
-            const { selection } = this.grid;
+            const { selection, context } = this.grid;
             const { activeCol, selectionCol } = selection;
+            const { combineRanges = [] } = context.config || {}
 
             if (activeCol && selectionCol) {
 
@@ -45,13 +48,28 @@ export default class MergeCells {
 
                 const combineRange = activeCol.combineRange;
 
-                if (!combineRange) {
+                // 看是否和现有的combineRanges有相交
+                const selectRange = {
+                    start: [activeCol.rowIndex, activeCol.colIndex],
+                    end: [selectionCol.rowIndex, selectionCol.colIndex]
+                }
+                let hasCross = false;
+                combineRanges.forEach(range => {
+                    if (hasRelation(range, selectRange)) {
+                        hasCross = true
+                    }
+                })
+
+                if (!combineRange && !hasCross) {
                     dispatch({
                         type: 'mergeCells',
                         payload,
                     })
                 } else {
-                    const newPayload = {
+                    const newPayload = hasCross ? {
+                        start: [Math.min(startRowIndex, selectRange.start[0]), Math.min(startColIndex, selectRange.start[1])],
+                        end: [Math.max(endRowIndex, selectRange.end[0]), Math.max(endColIndex, selectRange.end[1])]
+                    } : {
                         start: [Math.min(startRowIndex, combineRange.start[0]), Math.min(startColIndex, combineRange.start[1])],
                         end: [Math.max(endRowIndex, combineRange.end[0]), Math.max(endColIndex, combineRange.end[1])]
                     }

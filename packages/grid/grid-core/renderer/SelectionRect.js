@@ -45,7 +45,6 @@ export default class SelectionRect {
                 rect.height = selectionCol.y + selectionCol.height - rect.y;
             }
         }
-        console.log('asldkajlskdj 2', rect.width, rect.height, selectionCol?.x, selectionCol?.y)
 
         if (activeCol) {
             drawStrokeRect(

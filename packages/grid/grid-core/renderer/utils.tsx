@@ -3,6 +3,7 @@ export const getLayoutXY = (rowIndex, colIndex, layout, viewport, config) => {
     let x, y
     const _x = layout.getX(colIndex)
     const _y = layout.getY(rowIndex)
+
     if (colIndex < config.fixedConfig?.left) {
         x = _x
     } else {
