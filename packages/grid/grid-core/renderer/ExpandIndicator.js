@@ -1,6 +1,7 @@
 import { drawRect, drawStrokeRect } from "../utils/draw.js";
 
 import {getIndicatorBoundingRect} from "../selection/util.js";
+import { getLayoutXY } from './utils'
 
 
 export default class ExpandIndicator {
@@ -10,6 +11,7 @@ export default class ExpandIndicator {
     }
 
     render({ selection }) {
+        const { config, layout, viewport } = this.context;
         const activeCol = selection.activeCol;
         const selectionCol = selection.selectionCol;
 
@@ -18,7 +20,15 @@ export default class ExpandIndicator {
         }
 
         if (activeCol) {
-            const indicator = getIndicatorBoundingRect(activeCol, selectionCol);
+            const combineRange = activeCol.combineRange
+            let x, y;
+            if (combineRange) {
+                const { x: _x, y: _y } = getLayoutXY(combineRange.start[0], combineRange.start[1], layout, viewport, config);
+                x = _x + activeCol.combineWidth - 5;
+                y = _y + activeCol.combineHeight - 5;
+            }
+
+            const indicator = getIndicatorBoundingRect(activeCol, selectionCol, x, y);
 
             drawRect(
                 this.ctx,

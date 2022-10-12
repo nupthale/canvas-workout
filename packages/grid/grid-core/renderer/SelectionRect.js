@@ -1,4 +1,5 @@
 import { drawStrokeRect } from "../utils/draw.js";
+import { getLayoutXY } from './utils'
 
 export default class SelectionRect {
     constructor(context) {
@@ -7,6 +8,7 @@ export default class SelectionRect {
     }
 
     render({ selection }) {
+        const { layout, viewport, config } = this.context
         const activeCol = selection.activeCol;
         const selectionCol = selection.selectionCol;
 
@@ -20,6 +22,15 @@ export default class SelectionRect {
             width: activeCol.width,
             height: activeCol.height,
         };
+
+        const combineRange = activeCol.combineRange
+        if (combineRange) {
+            const { x: _x, y: _y } = getLayoutXY(combineRange.start[0], combineRange.start[1], layout, viewport, config)
+            rect.x = _x;
+            rect.y = _y;
+            rect.width = activeCol.combineWidth;
+            rect.height = activeCol.combineHeight;
+        }
 
         if (selectionCol) {
             rect.width = selectionCol.x + selectionCol.width - activeCol.x;

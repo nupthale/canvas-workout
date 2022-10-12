@@ -15,12 +15,20 @@ export const findColByEvent = (data, eventX, eventY) => {
     return result;
 }
 
-export const getIndicatorBoundingRect = (activeCol, selectionCol) => {
+export const getIndicatorBoundingRect = (activeCol, selectionCol, x, y) => {
     const rect = {
         x: activeCol.x + activeCol.width - 5,
         y: activeCol.y + activeCol.height - 5,
         width: 10,
         height: 10,
+    }
+
+    if (x) {
+        rect.x = x;        
+    }
+
+    if (y) {
+        rect.y = y;
     }
 
     if (selectionCol) {
