@@ -1,5 +1,7 @@
 import {dispatch} from "../../store/index.js";
 
+import { getMax, getMin } from './utils';
+
 export default class MergeCells {
     constructor(grid) {
         this.dom = this.initDom();
@@ -43,10 +45,27 @@ export default class MergeCells {
                     end: [endRowIndex, endColIndex]
                 };
 
-                dispatch({
-                    type: 'mergeCells',
-                    payload,
-                })
+                const combineRange = activeCol.combineRange;
+
+                if (!combineRange) {
+                    dispatch({
+                        type: 'mergeCells',
+                        payload,
+                    })
+                } else {
+                    const newPayload = {
+                        start: [getMin(startRowIndex, combineRange.start[0]), getMin(startColIndex, combineRange.start[1])],
+                        end: [getMax(endRowIndex, combineRange.end[0]), getMax(endColIndex, combineRange.end[1])]
+                    }
+
+                    dispatch({
+                        type: 'replaceMergeCells',
+                        payload: {
+                            origin: combineRange,
+                            newPayload,
+                        }
+                    })
+                }
             }
         });
     }

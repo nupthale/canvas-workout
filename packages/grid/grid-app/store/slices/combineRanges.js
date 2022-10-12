@@ -10,7 +10,12 @@ export const reducer = (state, action) => {
             return produce(state, draft => {
                 draft.combineRanges.push(action.payload);
             });
-
+        case 'replaceMergeCells':
+            return produce(state, draft => {
+                const { origin, newPayload } = action.payload;
+                const index = draft.combineRanges.findIndex(item => JSON.stringify(item) === JSON.stringify(origin));
+                draft.combineRanges.splice(index, 1, newPayload)
+            });
         default:
             break;
     }
