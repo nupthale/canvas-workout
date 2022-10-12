@@ -1,4 +1,5 @@
 import RandomBackground from "./commands/RandomBackground.js";
+import MergeCells from "./commands/MergeCells.js";
 
 export default class Toolbar {
     constructor({ $toolbar, grid }) {
@@ -6,7 +7,8 @@ export default class Toolbar {
         this.grid = grid;
 
         this.commands = [
-            new RandomBackground(this.grid)
+            new RandomBackground(this.grid),
+            new MergeCells(this.grid)
         ];
 
         this.initDom();
@@ -18,9 +20,11 @@ export default class Toolbar {
         const divider = document.createElement('div');
         divider.classList.add('divider');
 
-        this.commands.forEach(command => {
+        this.commands.forEach((command, index) => {
             fragment.appendChild(command.dom);
-            fragment.appendChild(divider);
+            if (index !== this.commands.length - 1) {
+                fragment.appendChild(divider);
+            }
         });
 
         this.$toolbar.appendChild(fragment);
