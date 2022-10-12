@@ -1,5 +1,5 @@
 import { drawStrokeRect } from "../utils/draw.js";
-import { getLayoutXY } from './utils'
+import { getLayoutXY, isColInCombineRange } from './utils'
 
 export default class SelectionRect {
     constructor(context) {
@@ -33,9 +33,19 @@ export default class SelectionRect {
         }
 
         if (selectionCol) {
-            rect.width = selectionCol.x + selectionCol.width - rect.x;
-            rect.height = selectionCol.y + selectionCol.height - rect.y;
+            // 如果selectionCol是mergedCells，那width、height的计算方式需要改变
+            if (selectionCol.combineRange && isColInCombineRange(selectionCol.rowIndex, selectionCol.colIndex, selectionCol.combineRange)) {
+                const { x: _x, y: _y } = getLayoutXY(selectionCol.combineRange.start[0], selectionCol.combineRange.start[1], layout, viewport, config)
+
+
+                rect.width = _x + selectionCol.combineWidth - rect.x;
+                rect.height = _y + selectionCol.combineHeight - rect.y;
+            } else {
+                rect.width = selectionCol.x + selectionCol.width - rect.x;
+                rect.height = selectionCol.y + selectionCol.height - rect.y;
+            }
         }
+        console.log('asldkajlskdj 2', rect.width, rect.height, selectionCol?.x, selectionCol?.y)
 
         if (activeCol) {
             drawStrokeRect(

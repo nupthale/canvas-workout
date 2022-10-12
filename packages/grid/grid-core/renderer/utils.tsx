@@ -18,3 +18,11 @@ export const getLayoutXY = (rowIndex, colIndex, layout, viewport, config) => {
         y
     }
 }
+
+export const isColInCombineRange = (rowIndex, colIndex, combineRange) => {
+    if (rowIndex >= combineRange.start[0] && rowIndex <= combineRange.end[0] && colIndex >= combineRange.start[1] && colIndex <= combineRange.end[1]) {
+        return true
+    } else {
+        return false
+    }
+}

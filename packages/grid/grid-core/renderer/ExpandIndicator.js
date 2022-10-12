@@ -27,8 +27,14 @@ export default class ExpandIndicator {
                 x = _x + activeCol.combineWidth - 5;
                 y = _y + activeCol.combineHeight - 5;
             }
+            let selectionX, selectionY;
+            if (selectionCol && selectionCol.combineRange) {
+                const { x: _x, y: _y } = getLayoutXY(selectionCol.combineRange.start[0], selectionCol.combineRange.start[1], layout, viewport, config);
+                selectionX = _x + selectionCol.combineWidth - 5;
+                selectionY = _y + selectionCol.combineHeight - 5;
+            }
 
-            const indicator = getIndicatorBoundingRect(activeCol, selectionCol, x, y);
+            const indicator = getIndicatorBoundingRect(activeCol, selectionCol, x, y, selectionX, selectionY);
 
             drawRect(
                 this.ctx,

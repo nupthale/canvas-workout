@@ -15,7 +15,7 @@ export const findColByEvent = (data, eventX, eventY) => {
     return result;
 }
 
-export const getIndicatorBoundingRect = (activeCol, selectionCol, x, y) => {
+export const getIndicatorBoundingRect = (activeCol, selectionCol, x, y, selectionX, selectionY) => {
     const rect = {
         x: activeCol.x + activeCol.width - 5,
         y: activeCol.y + activeCol.height - 5,
@@ -32,8 +32,13 @@ export const getIndicatorBoundingRect = (activeCol, selectionCol, x, y) => {
     }
 
     if (selectionCol) {
-        rect.x = selectionCol.x + selectionCol.width - 5;
-        rect.y = selectionCol.y + selectionCol.height - 5;
+        if (selectionCol.combineRange) {
+            rect.x = selectionX;
+            rect.y = selectionY;
+        } else {
+            rect.x = selectionCol.x + selectionCol.width - 5;
+            rect.y = selectionCol.y + selectionCol.height - 5;
+        }
     }
 
     return rect;
