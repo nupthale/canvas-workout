@@ -12,9 +12,22 @@ export const reducer = (state, action) => {
             });
         case 'replaceMergeCells':
             return produce(state, draft => {
-                const { origin, newPayload } = action.payload;
-                const index = draft.combineRanges.findIndex(item => JSON.stringify(item) === JSON.stringify(origin));
-                draft.combineRanges.splice(index, 1, newPayload)
+                const newPayload = action.payload;
+                const combineRanges = state.combineRanges;
+                let indexes = []
+                combineRanges.forEach((item, idx) => {
+                    if (item.start[0] >= newPayload.start[0] && item.end[0] <= newPayload.end[0] && item.start[1] >= newPayload.start[1] && item.end[1] <= newPayload.end[1]) {
+                        indexes.push(idx);
+                    }
+                })
+
+                // 从大到小splice，这样不会漏
+                indexes = indexes.reverse()
+                indexes.forEach(idx => {
+                    draft.combineRanges.splice(idx, 1)
+                })
+
+                draft.combineRanges.push(newPayload)
             });
         default:
             break;

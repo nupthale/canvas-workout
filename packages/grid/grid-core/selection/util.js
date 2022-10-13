@@ -23,6 +23,11 @@ export const getIndicatorBoundingRect = (activeCol, selectionCol, x, y, selectio
         height: 10,
     }
 
+    if (activeCol.combineRange) {
+        rect.x = rect.x - activeCol.width + activeCol.combineWidth;
+        rect.y = rect.y - activeCol.height + activeCol.combineHeight;
+    }
+
     if (x) {
         rect.x = x;        
     }

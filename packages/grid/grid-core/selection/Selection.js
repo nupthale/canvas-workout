@@ -65,6 +65,39 @@ export default class Selection {
         return result;
     }
 
+    getColByIndex(rowIndex, colIndex) {
+        const { clippedData, fixedData } = this.stage;
+
+        // 先找fixed， 没找到再找clipped
+        const rows = [
+            fixedData.fixedHeaderRows,
+            fixedData.fixedLeftRows,
+            fixedData.leftCornerRows,
+            fixedData.fixedRightRows,
+            clippedData.clippedData,
+        ];
+
+        // 先找fixed， 没找到再找clipped
+        let result = null;
+        for (let i = 0; i < rows.length; i++) {
+            const data = rows[i];
+
+            data.forEach(item => {
+                for(let j = 0; j < item.cols.length; j++) {
+                    if (item.cols[j].rowIndex === rowIndex && item.cols[j].colIndex === colIndex) {
+                        result = item.cols[j]
+                        break
+                    }
+                }
+            })
+            if (result) {
+                break
+            }
+        }
+
+        return result;
+    }
+
     initSelectionEvt() {
         const { context } = this.stage;
         const { event$, dom, viewport } = context;
@@ -77,6 +110,9 @@ export default class Selection {
             const eventY = e.clientY - top;
 
             this.activeCol = this.getCol(eventX, eventY, scrollTop);
+            if (this.activeCol.combineRange) {
+                this.activeCol = this.getColByIndex(this.activeCol.combineRange.start[0], this.activeCol.combineRange.start[1])
+            }
             this.stage.render();
         });
 

@@ -46,35 +46,17 @@ export default class MergeCells {
                     end: [endRowIndex, endColIndex]
                 };
 
-                const combineRange = activeCol.combineRange;
+                const hasCross = getIsCross(combineRanges, payload)
 
-                // 看是否和现有的combineRanges有相交
-                const selectRange = {
-                    start: [activeCol.rowIndex, activeCol.colIndex],
-                    end: [selectionCol.rowIndex, selectionCol.colIndex]
-                }
-                const hasCross = getIsCross(combineRanges, selectRange)
-
-                if (!combineRange && !hasCross) {
+                if (!hasCross) {
                     dispatch({
                         type: 'mergeCells',
                         payload,
                     })
                 } else {
-                    const newPayload = hasCross ? {
-                        start: [Math.min(startRowIndex, selectRange.start[0]), Math.min(startColIndex, selectRange.start[1])],
-                        end: [Math.max(endRowIndex, selectRange.end[0]), Math.max(endColIndex, selectRange.end[1])]
-                    } : {
-                        start: [Math.min(startRowIndex, combineRange.start[0]), Math.min(startColIndex, combineRange.start[1])],
-                        end: [Math.max(endRowIndex, combineRange.end[0]), Math.max(endColIndex, combineRange.end[1])]
-                    }
-
                     dispatch({
                         type: 'replaceMergeCells',
-                        payload: {
-                            origin: combineRange,
-                            newPayload,
-                        }
+                        payload: payload,
                     })
                 }
             }

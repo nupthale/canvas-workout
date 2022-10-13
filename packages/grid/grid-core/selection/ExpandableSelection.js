@@ -51,6 +51,9 @@ export default class ExpandableSelection extends Selection {
             if (this.isExpanding) {
                 const { scrollTop } = viewport
                 this.selectionCol = this.getCol(eventX, eventY, scrollTop);
+                if (this.selectionCol.combineRange) {
+                    this.selectionCol = this.getColByIndex(this.selectionCol.combineRange.end[0], this.selectionCol.combineRange.end[1])
+                }
                 if (!this.selectionCol) {
                     debugger;
                 }
