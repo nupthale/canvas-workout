@@ -57,7 +57,7 @@ export default class Stage {
                 ...props,
             }),
             layout: new Layout(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig),
-            selectable: false,
+            selectable: true,
         };
 
         this.context.viewport = new Viewport({

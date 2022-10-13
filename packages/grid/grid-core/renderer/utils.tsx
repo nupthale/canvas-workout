@@ -30,20 +30,19 @@ export const isColInCombineRange = (rowIndex, colIndex, combineRange) => {
 
 /**
  * 判断两个range组成的矩形是否相交
- * cx1=max(ax1,bx1)         //左下x为最大的左下x集合
- * cy1=max(ay1,by1)         //左下y为最大的左下y集合
- * cx2=min(ax2,bx2)         //右上x为最小的右上x集合
- * cy2=min(ay2,by2)         //右上y为最小的右上y集合
- * 如果两个矩形不相交，那么满足：（cx1>cx2）||（cy1>cy2）
- * 也就是说，如果矩形相交就条件相反
+ * 根据两个矩形的中间点之间距离是否大于两边边长合来判断
  */
 export const hasOverlap = (aRange, bRange) => {
-    const cx1 = Math.max(aRange.start[0], bRange.start[0]);
-    const cy1 = Math.min(aRange.start[1], bRange.start[1]);
-    const cx2 = Math.min(aRange.end[0], bRange.end[0]);
-    const cy2 = Math.max(aRange.end[1], bRange.end[1]);
+    const center1 = [(aRange.end[0] + aRange.start[0]) / 2, (aRange.end[1] + aRange.start[1]) / 2]
+    const center2 = [(bRange.end[0] + bRange.start[0]) / 2, (bRange.end[1] + bRange.start[1]) / 2]
 
-    return !(cx1 > cx2 || cy1 > cy2)
+    const aRangeWidth = aRange.end[0] - aRange.start[0];
+    const aRangeHeight = aRange.end[1] - aRange.start[1];
+
+    const bRangeWidth = bRange.end[0] - bRange.start[0];
+    const bRangeHeight = bRange.end[1] - bRange.start[1];
+
+    return center2[0] - center1[0] < (aRangeWidth + bRangeWidth) / 2 && center2[1] - center1[1] < (aRangeHeight + bRangeHeight) / 2
 }
 
 /**
