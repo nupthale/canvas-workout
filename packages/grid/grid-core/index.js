@@ -57,6 +57,7 @@ export default class Stage {
                 ...props,
             }),
             layout: new Layout(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig),
+            selectable: false,
         };
 
         this.context.viewport = new Viewport({
@@ -66,6 +67,14 @@ export default class Stage {
 
         this.context.viewport.moveWindow();
         this.context.viewport.scrollbar.update();
+    }
+
+    getFontArr() {
+        const fontSize = '12px';
+        const fontFamily = 'SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace';
+        const fontWeight = 'normal';
+
+        return [fontWeight, fontSize, fontFamily];
     }
 
     initCanvas(width, height) {
@@ -79,7 +88,7 @@ export default class Stage {
 
         this.ctx.setTransform(PIXEL_RATIO, 0, 0 , PIXEL_RATIO, 0, 0);
         this.ctx.fillStyle = '#fff';
-        this.ctx.font = '14px';
+        this.ctx.font = this.getFontArr().join(' ');
         this.ctx.textBaseline = 'middle';
         this.ctx.strokeStyle = strokeColor;
     }

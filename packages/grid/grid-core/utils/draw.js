@@ -53,6 +53,24 @@ export const drawRect = (
     }
 };
 
+export const drawPureColorRect = (
+    ctx,
+    startX,
+    startY,
+    width,
+    height,
+    fillStyle,
+) => {
+    ctx.save();
+
+    if (fillStyle) {
+        ctx.fillStyle = fillStyle;
+        ctx.fillRect(startX, startY, width, height)
+    }
+
+    ctx.restore();
+};
+
 export const drawStrokeRect = (
     ctx,
     startX,

@@ -24,6 +24,7 @@ export default class ExpandableSelection extends Selection {
     initIndicatorEvt() {
         const { context } = this.stage;
         const { event$, dom, viewport } = context;
+        const { selectable } = context;
 
         const {left, top} = dom.getBoundingClientRect();
 
@@ -59,10 +60,14 @@ export default class ExpandableSelection extends Selection {
                 this.stage.render();
             } else {
                 // hover
-                if (this.isEnterIndicator(eventX, eventY)) {
-                    dom.style.cursor = 'crosshair';
+                if (selectable) {
+                    if (this.isEnterIndicator(eventX, eventY)) {
+                        dom.style.cursor = 'crosshair';
+                    } else {
+                        dom.style.cursor = 'cell';
+                    }
                 } else {
-                    dom.style.cursor = 'cell';
+                    dom.style.cursor = 'text'
                 }
             }
         });

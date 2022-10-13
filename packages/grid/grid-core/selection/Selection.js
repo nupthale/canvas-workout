@@ -10,6 +10,9 @@ export default class Selection {
 
         this.stage = stage;
         this.initSelectionEvt();
+
+        // 按住鼠标拖动
+        this.isMouseDown = false;
     }
 
     get selection() {
@@ -67,6 +70,7 @@ export default class Selection {
         const { event$, dom, viewport } = context;
 
         event$.on('mousedown', (e) => {
+            this.isMouseDown = true
             const {left, top} = dom.getBoundingClientRect();
             const { scrollTop } = viewport
             const eventX = e.clientX - left;
@@ -75,5 +79,15 @@ export default class Selection {
             this.activeCol = this.getCol(eventX, eventY, scrollTop);
             this.stage.render();
         });
+
+        event$.on('mousemove', () => {
+            if (this.isMouseDown) {
+                this.stage.render();
+            }
+        })
+
+        event$.on('mouseup', () => {
+            this.isMouseDown = false
+        })
     }
 }
