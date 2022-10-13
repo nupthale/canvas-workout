@@ -8,7 +8,7 @@ export default class SelectionRect {
     }
 
     render({ selection }) {
-        const { layout, viewport, config } = this.context
+        const { layout, viewport, config, combineRanges } = this.context
         const activeCol = selection.activeCol;
         const selectionCol = selection.selectionCol;
 
@@ -41,6 +41,7 @@ export default class SelectionRect {
                 rect.width = _x + selectionCol.combineWidth - rect.x;
                 rect.height = _y + selectionCol.combineHeight - rect.y;
             } else {
+                // 合并单元格TODO：如果和已有的combineRanges有交集，需要取比较大的width和height加
                 rect.width = selectionCol.x + selectionCol.width - rect.x;
                 rect.height = selectionCol.y + selectionCol.height - rect.y;
             }

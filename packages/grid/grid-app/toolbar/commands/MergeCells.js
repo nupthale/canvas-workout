@@ -1,6 +1,6 @@
 import {dispatch} from "../../store/index.js";
 
-import { hasRelation } from './utils'
+import { getIsCross } from '../../../grid-core/renderer/utils'
 
 export default class MergeCells {
     constructor(grid) {
@@ -53,12 +53,7 @@ export default class MergeCells {
                     start: [activeCol.rowIndex, activeCol.colIndex],
                     end: [selectionCol.rowIndex, selectionCol.colIndex]
                 }
-                let hasCross = false;
-                combineRanges.forEach(range => {
-                    if (hasRelation(range, selectRange)) {
-                        hasCross = true
-                    }
-                })
+                const hasCross = getIsCross(combineRanges, selectRange)
 
                 if (!combineRange && !hasCross) {
                     dispatch({
