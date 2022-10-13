@@ -96,7 +96,7 @@ export default class SelectionText {
         // 计算选中的文字内容
         // 「activeCol.x + activeCol.combineWidth / 2」是文字渲染的位置
         // 又由于alignCenter，所以要减去文字的宽度 / 2，大致就是开始的位置
-        const textValue = config.getText(activeCol.rowIndex, activeCol.colIndex)
+        const textValue = config.getText(activeCol.rowIndex, activeCol.colIndex) + ''
         const textWidth = this.ctx.measureText(textValue).width
         const startX = activeCol.x + activeCol.combineWidth / 2 - textWidth / 2
         const startMaxX = activeCol.x + activeCol.combineWidth / 2 + textWidth / 2
