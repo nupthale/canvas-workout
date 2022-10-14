@@ -42,7 +42,7 @@ export const hasOverlap = (aRange, bRange) => {
     const bRangeWidth = bRange.end[0] - bRange.start[0];
     const bRangeHeight = bRange.end[1] - bRange.start[1];
 
-    return center2[0] - center1[0] < (aRangeWidth + bRangeWidth) / 2 && center2[1] - center1[1] < (aRangeHeight + bRangeHeight) / 2
+    return ((center2[0] - center1[0]) <= (aRangeWidth + bRangeWidth) / 2) && ((center2[1] - center1[1]) <= (aRangeHeight + bRangeHeight) / 2)
 }
 
 /**
