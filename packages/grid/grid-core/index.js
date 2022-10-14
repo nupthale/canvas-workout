@@ -77,16 +77,20 @@ export default class Stage {
         return [fontWeight, fontSize, fontFamily];
     }
 
-    initCanvas(width, height) {
-        this.ctx = this.$canvas.getContext('2d');
+    updateWH(width, height) {
         this.$canvas.width = width * PIXEL_RATIO;
         this.$canvas.height = height * PIXEL_RATIO;
         this.$canvas.style.width = `${width}px`;
         this.$canvas.style.height = `${height}px`;
+        this.ctx.setTransform(PIXEL_RATIO, 0, 0 , PIXEL_RATIO, 0, 0);
+    }
+ 
+    initCanvas(width, height) {
+        this.ctx = this.$canvas.getContext('2d');
         this.$canvas.style.background = '#fff';
         this.$canvas.style.cursor = 'cell';
+        this.updateWH(width, height)
 
-        this.ctx.setTransform(PIXEL_RATIO, 0, 0 , PIXEL_RATIO, 0, 0);
         this.ctx.fillStyle = '#fff';
         this.ctx.font = this.getFontArr().join(' ');
         this.ctx.textBaseline = 'middle';
@@ -132,6 +136,7 @@ export default class Stage {
 
         if (shouldLayout) {
             this.context.layout.update(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig);
+            this.updateWH(width, height)
 
             this.context.viewport.update({
                 width,

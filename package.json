@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "createVite": "pnpm create vite",
+    "grid": "pnpm --dir packages/grid run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
