@@ -54,9 +54,6 @@ export default class ExpandableSelection extends Selection {
                 if (this.selectionCol.combineRange) {
                     this.selectionCol = this.getColByIndex(this.selectionCol.combineRange.end[0], this.selectionCol.combineRange.end[1])
                 }
-                if (!this.selectionCol) {
-                    debugger;
-                }
 
                 console.info('#selectionCol', this.selectionCol);
 
