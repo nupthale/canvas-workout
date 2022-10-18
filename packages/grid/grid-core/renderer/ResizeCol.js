@@ -9,7 +9,7 @@ export default class ResizeCol {
     }
 
     matchCol(e, rows, callback) {
-        const { dom, layout, canvasCtx } = this.context;
+        const { dom, layout, config } = this.context;
         const {left, top} = dom.getBoundingClientRect();
         const eventX = e.clientX - left;
         const eventY = e.clientY - top;
@@ -19,7 +19,8 @@ export default class ResizeCol {
         for (let j = 0; j < row.cols.length; j++) {
             const col = row.cols[j];
             // 这里需要以layout的xMap为准
-            const lineX = layout.xMap[j] + col.combineWidth
+            const colWidth = config?.colWidths?.[j] ?? col.width
+            const lineX = layout.xMap[j] + colWidth
 
             // 判断这一列是否在高亮的范围内
             if (lineX <= eventX + 5 && lineX > eventX - 5 && eventY < rowHeight) {
@@ -55,7 +56,7 @@ export default class ResizeCol {
                 const colIndex = this.selectedCol.colIndex;
                 // 新的rect宽度
                 const width = eventX - this.selectedCol.x;
-                drawLine(canvasCtx, eventX - 1, 0, eventX - 1, document.body.clientHeight, 'red', 3);
+                drawLine(canvasCtx, eventX, 0, eventX, document.body.clientHeight, 'rgba(69, 128, 230, 1)', 2);
 
                 if (this.selectedCol && width) {
                     stage.colResize({
