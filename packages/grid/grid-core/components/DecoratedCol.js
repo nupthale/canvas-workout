@@ -10,7 +10,7 @@ export default class DecoratedCol extends CombinableCol {
     getBackground(context, rowIndex, colIndex) {
         const { background } = context.config.decorators || {};
 
-        const config = background?.find(item => {
+        const config = background?.filter?.(Boolean)?.find(item => {
             return item.rowIndex === rowIndex && item.colIndex === colIndex;
         });
 
