@@ -47,7 +47,8 @@ export default class SelectionRect {
             }
         }
 
-        if (activeCol) {
+        const { header } = config.fixedConfig || {};
+        if (activeCol && activeCol.rowIndex !== header - 1) {
             drawStrokeRect(
                 this.ctx,
                 rect.x,

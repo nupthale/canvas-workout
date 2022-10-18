@@ -3,6 +3,7 @@ import Scrollbar from "./Scrollbar";
 import SelectionRect from "./SelectionRect";
 import ExpandIndicator from "./ExpandIndicator.js";
 import SelectionText from './SelectionText';
+import ResizeCol from './ResizeCol';
 
 export default class Renderer {
     constructor(context) {
@@ -19,6 +20,7 @@ export default class Renderer {
                 ...this.components,
                 new SelectionRect(context),
                 new ExpandIndicator(context),
+                new ResizeCol(context),
             ]
         } else {
             this.components.push(new SelectionText(context))

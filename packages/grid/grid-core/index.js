@@ -20,11 +20,15 @@ export default class Stage {
             $canvas,
             width,
             height,
+            onColResize,
         } = props;
 
         this.$canvas = $canvas;
         this.initCanvas(width, height);
+        this.initialWidth = width;
+        this.initialHeight = height;
         this.initContext(props);
+        this.onColResize = onColResize;
 
         this.clippedData = new ClippedData(this.context);
         this.fixedData = new FixedData(this.context);
@@ -35,6 +39,10 @@ export default class Stage {
         this.selection = new ExpandableSelection(this);
 
         this.render();
+    }
+
+    colResize(payload) {
+        this.onColResize(payload)
     }
 
     initContext(props) {
@@ -136,7 +144,10 @@ export default class Stage {
 
         if (shouldLayout) {
             this.context.layout.update(dataSource.length, columns.length, rowHeights, colWidths, fixedConfig);
-            this.updateWH(width, height)
+            // 宽高没变不需要更新
+            if (this.initialWidth !== width || this.initialHeight !== height) {
+                this.updateWH(width, height)
+            }
 
             this.context.viewport.update({
                 width,

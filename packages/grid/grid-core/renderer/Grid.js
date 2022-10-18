@@ -69,7 +69,9 @@ export default class Grid {
             }
 
             this.ctx.fillStyle = col.colIndex === 0 ? '#999' : '#333';
-            this.ctx.fillText(config.getText(col.rowIndex, col.colIndex), col.x + col.combineWidth / 2, col.y + col.combineHeight / 2);
+            const text = config.getText(col.rowIndex, col.colIndex)
+            const renderText = text ?? config.getColumnTitle(col.colIndex)
+            this.ctx.fillText(renderText, col.x + col.combineWidth / 2, col.y + col.combineHeight / 2);
         }
 
         // 画横线

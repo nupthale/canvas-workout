@@ -1,4 +1,4 @@
-import {minScrollbarSize, scrollbarSize} from "../meta.js";
+import {minScrollbarSize, scrollbarSize} from "../../meta.js";
 import produce from "immer";
 
 export const state = {

@@ -30,12 +30,21 @@ state$.subscribe(state => {
     crtState = state;
 });
 
+let lastColWidths = ''
+
 export const dispatch = (action) => {
     if (action.type === 'applyPatch') {
         const newState = applyPatches(crtState, action.payload);
         if (newState) {
             state$.next(newState);
         }
+    } else if (action.type === 'colResize') {
+        // 对列宽变化特殊处理
+        const newState = slices[3].reducer(crtState, action);
+        if (newState && lastColWidths !== JSON.stringify(newState.colWidths)) {
+            state$.next({...newState, shouldLayout: false});
+        }
+        lastColWidths = JSON.stringify(newState?.colWidths)
     } else {
         slices.forEach(item => {
             const newState = item.reducer(crtState, action);

@@ -15,6 +15,8 @@ export default class GridApp {
         this.toolbar = this.initToolbar(props);
 
         this.initEvt();
+
+        this.prevColWidths = '';
     }
 
     initGrid(props) {
@@ -32,7 +34,15 @@ export default class GridApp {
             height,
             columns,
             dataSource,
+            onColResize: this.onColResize,
         });
+    }
+
+    onColResize(payload) {
+        dispatch({
+            type: 'colResize',
+            payload
+        })
     }
 
     initToolbar(props) {

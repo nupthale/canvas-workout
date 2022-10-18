@@ -117,7 +117,10 @@ export default class Selection {
         });
 
         event$.on('mousemove', () => {
-            if (this.isMouseDown) {
+            const { selectable } = context;
+            // 1. 非选中模式下：用于文字选中框背景重置
+            // 2. 选中模式下，用于头部悬浮高亮resize线条绘制
+            if (!selectable && this.isMouseDown || selectable) {
                 this.stage.render();
             }
         })

@@ -33,4 +33,9 @@ export default class Config {
         const column = this.columns[colIndex];
         return this.dataSource[rowIndex][column.dataIndex]
     }
+
+    getColumnTitle(colIndex) {
+        const column = this.columns[colIndex];
+        return column.title;
+    }
 }

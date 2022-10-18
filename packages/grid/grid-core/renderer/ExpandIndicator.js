@@ -19,7 +19,8 @@ export default class ExpandIndicator {
             return;
         }
 
-        if (activeCol) {
+        const { header } = config.fixedConfig || {};
+        if (activeCol && activeCol.rowIndex !== header - 1) {
             const combineRange = activeCol.combineRange
             let x, y;
             if (combineRange) {
