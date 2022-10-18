@@ -2,6 +2,7 @@
 import {dispatch} from "../../store/index.js";
 
 import {history, redo} from "../../store/history.js";
+import {sendToServer} from "../../collaboration/firestore.js";
 
 export default class Redo {
     constructor(grid) {
@@ -29,7 +30,7 @@ export default class Redo {
     }
 
     initEvt() {
-        this.dom.addEventListener('click', () => {
+        this.dom.addEventListener('click', async () => {
             const op = redo.pop();
 
             if (!op) {
@@ -37,6 +38,8 @@ export default class Redo {
             }
 
             history.push(op);
+
+            await sendToServer(op.redo);
 
             dispatch({
                 type: 'applyPatch',

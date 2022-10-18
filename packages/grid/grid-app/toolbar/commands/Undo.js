@@ -2,6 +2,8 @@ import {dispatch, crtState} from "../../store/index.js";
 
 import {history, redo} from "../../store/history.js";
 
+import {sendToServer} from "../../collaboration/firestore.js";
+
 
 export default class Undo {
     constructor(grid) {
@@ -28,7 +30,7 @@ export default class Undo {
     }
 
     initEvt() {
-        this.dom.addEventListener('click', () => {
+        this.dom.addEventListener('click', async () => {
             const op = history.pop();
 
             if (!op) {
@@ -36,6 +38,8 @@ export default class Undo {
             }
 
             redo.push(op);
+
+            await sendToServer(op.undo);
 
             dispatch({
                 type: 'applyPatch',
