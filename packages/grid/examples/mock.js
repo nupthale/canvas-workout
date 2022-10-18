@@ -60,7 +60,7 @@ export const columns = [
 const list = [];
 const million = 1000000;
 
-for (let i = 0; i < 5 * million; i++) {
+for (let i = 0; i < 1 * million; i++) {
     list.push(
         {index: i, avatar: '🎅🏻',name: 'chuanJianGuo', age: 74, address: 'America'},
     );
