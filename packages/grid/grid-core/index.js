@@ -9,6 +9,7 @@ import Renderer from './renderer/Renderer';
 import EventRegistry from "./event/EventRegistry.js";
 
 import ExpandableSelection from "./selection/ExpandableSelection.js";
+import Resize from './resize/index';
 
 import Config from "./data/Config";
 
@@ -37,6 +38,7 @@ export default class Stage {
         this.renderer = new Renderer(this.context);
 
         this.selection = new ExpandableSelection(this);
+        this.resize = new Resize(this.context);
 
         this.render();
     }

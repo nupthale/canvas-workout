@@ -33,7 +33,6 @@ state$.subscribe(state => {
 let lastColWidths = ''
 
 export const dispatch = (action) => {
-    debugger;
     if (action.type === 'applyPatch') {
         const newState = applyPatches(crtState, action.payload);
 
