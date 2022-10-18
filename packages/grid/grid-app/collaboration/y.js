@@ -27,6 +27,5 @@ const firebaseProvider = new FirebaseProvider(doc)
 // observe changes of the sum
 state.observe(event => {
     // print updates when the data changes
-    debugger;
     console.log('new sum: ' + state.toJSON());
 });
