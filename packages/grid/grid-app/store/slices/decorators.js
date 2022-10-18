@@ -1,5 +1,8 @@
 import produce from "immer";
 
+import { handleAddPatch } from "../history.js";
+
+
 import { sendToServer } from "../../collaboration/firestore.js";
 
 export const initialState = {
@@ -22,6 +25,8 @@ export const reducer = (state, action) => {
                     draft.decorators.background.push(item);
                 });
             }, async (patches, inversePatches) => {
+                handleAddPatch(patches, inversePatches, true);
+
                 await sendToServer(patches);
             });
 

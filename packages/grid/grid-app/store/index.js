@@ -23,7 +23,7 @@ const defaultState = slices.reduce((acc, crt) => {
     }
 }, {});
 
-let crtState = defaultState;
+export let crtState = defaultState;
 export const state$ = new BehaviorSubject(defaultState);
 
 state$.subscribe(state => {
@@ -33,8 +33,10 @@ state$.subscribe(state => {
 let lastColWidths = ''
 
 export const dispatch = (action) => {
+    debugger;
     if (action.type === 'applyPatch') {
         const newState = applyPatches(crtState, action.payload);
+
         if (newState) {
             state$.next(newState);
         }
