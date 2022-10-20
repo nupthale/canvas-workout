@@ -1,4 +1,5 @@
 import produce from "immer";
+import {handleAddPatch} from "../history.js";
 
 const width = document.documentElement.clientWidth;
 const height = document.documentElement.clientHeight - 40;
@@ -19,7 +20,7 @@ export const initialState = {
 export const reducer = (state, action) => {
     switch(action.type) {
         // 改变列宽
-        case 'colResize': 
+        case 'colResize':
             return produce(state, draft => {
                 const colIndex = action.payload.colIndex;
                 const width = action.payload.width;
@@ -27,6 +28,8 @@ export const reducer = (state, action) => {
                 if (state.colWidths[colIndex] !== width && width > 0) {
                     draft.colWidths[colIndex] = width;
                 }
+            }, async (patches, inversePatches) => {
+                await handleAddPatch(patches, inversePatches, true);
             })
         case 'windowResize':
             return produce(state, draft => {

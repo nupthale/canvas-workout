@@ -1,4 +1,5 @@
 import produce from "immer";
+import {handleAddPatch} from "../history.js";
 
 export const initialState = {
     combineRanges: [],
@@ -9,6 +10,8 @@ export const reducer = (state, action) => {
         case 'mergeCells':
             return produce(state, draft => {
                 draft.combineRanges.push(action.payload);
+            }, async (patches, inversePatches) => {
+                await handleAddPatch(patches, inversePatches, true);
             });
         case 'replaceMergeCells':
             return produce(state, draft => {
@@ -28,6 +31,8 @@ export const reducer = (state, action) => {
                 })
 
                 draft.combineRanges.push(newPayload)
+            }, async (patches, inversePatches) => {
+                await handleAddPatch(patches, inversePatches, true);
             });
         default:
             break;
