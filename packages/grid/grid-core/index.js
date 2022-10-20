@@ -94,7 +94,7 @@ export default class Stage {
         this.$canvas.style.height = `${height}px`;
         this.ctx.setTransform(PIXEL_RATIO, 0, 0 , PIXEL_RATIO, 0, 0);
     }
- 
+
     initCanvas(width, height) {
         this.ctx = this.$canvas.getContext('2d');
         this.$canvas.style.background = '#fff';
