@@ -11,13 +11,15 @@ import MouseWheelHandler from "./event/MouseWheelHandler";
 import TouchMoveHandler from "./event/TouchMoveHandler";
 
 export default class Stage {
-    constructor(root, mountNode, width, height) {
+    constructor(root, mountNode, width, height, elementRegistry) {
         this.root = root;
 
         this.width = width;
         this.height = height;
 
         this.$root = mountNode;
+
+        this.elementRegistry = elementRegistry;
 
         this.init();
     }
@@ -82,7 +84,7 @@ export default class Stage {
 
         this.layerTree = Layer.create(this.layoutTree, null);
 
-        this.renderer = new Render(this.ctx, this.layerTree);
+        this.renderer = new Render(this.ctx, this.layerTree, this.elementRegistry);
 
         this.repaint();
     }

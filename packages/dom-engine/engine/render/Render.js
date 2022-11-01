@@ -9,11 +9,11 @@ import PathRender from "./PathRender";
 
 import {shouldClipCtx} from "./util";
 
-
 export default class Render {
-    constructor(ctx, rootLayer) {
+    constructor(ctx, rootLayer, elementRegistry) {
         this.ctx = ctx;
         this.rootLayer = rootLayer;
+        this.elementRegistry = elementRegistry;
 
         this.opacityNodes = [];
         this.overflowNodes = [];
@@ -37,8 +37,8 @@ export default class Render {
         nodes.forEach(node => {
             if (node.isTextNode) {
                 this.renderTextNode(node);
-            } else if (node.isPath) {
-                this.renderPath(node);
+            } else if (node.isExtendElement) {
+                this.renderExtendElement(node);
             } else {
                 this.renderElement(node);
             }
@@ -108,8 +108,9 @@ export default class Render {
         renderer.render();
     }
 
-    renderPath(node) {
-        const renderer = new PathRender(this.ctx, node);
+    renderExtendElement(node) {
+        const renderConstructor = this.elementRegistry.get(node.type);
+        const renderer = new renderConstructor(this.ctx, node);
         renderer.render();
     }
 }

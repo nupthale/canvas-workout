@@ -1,5 +1,6 @@
 const margin = 50;
 
+// 可以做成Axis Element， 放到dom-engine中，减少dom数量
 export default class XAxis {
     constructor(props) {
         this.context = props.context;

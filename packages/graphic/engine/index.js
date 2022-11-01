@@ -1,12 +1,24 @@
 import Stage from "../../dom-engine/engine/stage";
 
+import Registry from "../../dom-engine/engine/render/Registry";
+
 import Line from "./charts/line.jsx";
+
+import Path, { PathRender } from "./elements/Path";
 
 export default class Chart {
     constructor(props) {
         this.context = props;
 
+        this.initRegistry();
+
         this.render();
+    }
+
+    initRegistry() {
+        this.elementRegistry = new Registry();
+
+        this.elementRegistry.register(Path.type, PathRender);
     }
 
     render() {
@@ -20,10 +32,15 @@ export default class Chart {
 
         switch (type) {
             case 'line':
+                debugger;
                 const line = new Line(this.context);
-                this.stage = new Stage(line.render(), document.getElementById(mountId), width, height);
-
-                console.info('stage', this.stage);
+                this.stage = new Stage(
+                    line.render(),
+                    document.getElementById(mountId),
+                    width,
+                    height,
+                    this.elementRegistry,
+                );
                 break;
             default:
                 break;

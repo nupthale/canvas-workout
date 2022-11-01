@@ -1,7 +1,7 @@
 import XAxis from "../elements/Axis/x.jsx";
 import YAxis from "../elements/Axis/y.jsx";
 
-import Path from '../../../dom-engine/engine/graphic/path';
+import Path from '../elements/Path';
 
 const margin = 50;
 
