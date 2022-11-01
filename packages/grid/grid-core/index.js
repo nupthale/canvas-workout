@@ -102,7 +102,7 @@ export default class Stage {
         this.updateWH(width, height)
 
         this.ctx.fillStyle = '#fff';
-        this.ctx.font = this.getFontArr().join(' ');
+        this.ctx.font = this.getFontArr().join('` ');
         this.ctx.textBaseline = 'middle';
         this.ctx.strokeStyle = strokeColor;
     }

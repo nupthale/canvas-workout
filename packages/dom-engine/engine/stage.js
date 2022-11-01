@@ -3,7 +3,6 @@ import {PIXEL_RATIO} from "./utils/util";
 import Layer from "./layer/Layer";
 import Render from "./render/Render";
 
-
 import ClickHandler from "./event/ClickHandler";
 import DblClickHandler from "./event/DblClickHandler";
 import ContextMenuHandler from "./event/ContextMenuHandler";

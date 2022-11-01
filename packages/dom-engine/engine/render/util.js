@@ -1,5 +1,8 @@
 export const shouldClipCtx = (element) => {
-    const style = element.getComputedStyle();
+    try {
+        const style = element.getComputedStyle();
 
-    return style.overflow !== 'visible';
+        return style.overflow !== 'visible';
+    } catch(e) {
+    }
 }

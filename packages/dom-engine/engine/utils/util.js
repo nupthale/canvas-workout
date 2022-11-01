@@ -62,21 +62,26 @@ export const createElement = (type, props, ...children) => {
         }
     })
 
-    if (type === 'view') {
-        return new Element({
-            ...props,
-            children: flatChildren,
-        })
-    } else if (type === 'scrollable') {
-        return new Scrollable({
-            ...props,
-            children: flatChildren,
-        })
-    } else {
-        return new Text({
-            text: children[0],
-            children: [],
-        })
+    if (typeof type === 'string') {
+        if (type === 'view') {
+            return new Element({
+                ...props,
+                children: flatChildren,
+            })
+        } else if (type === 'scrollable') {
+            return new Scrollable({
+                ...props,
+                children: flatChildren,
+            })
+        } else {
+            return new Text({
+                text: children[0],
+                children: [],
+            })
+        }
+    } else  {
+        const inst = new type({...props, children: flatChildren });
+        return inst.render ? inst.render() : inst;
     }
 }
 

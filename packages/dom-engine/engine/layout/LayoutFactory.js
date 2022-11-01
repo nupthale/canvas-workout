@@ -4,6 +4,7 @@ import AbsoluteLayout from './AbsoluteLayout';
 
 import RelativeLayout from './RelativeLayout';
 import StickyLayout from './StickyLayout';
+import FixedLayout from './FixedLayout';
 
 export default class LayoutFactory {
     static make(element) {
@@ -20,6 +21,9 @@ export default class LayoutFactory {
                 break;
             case 'sticky':
                 layout = new StickyLayout(element);
+                break;
+            case 'fixed':
+                layout = new FixedLayout(element);
                 break;
             case 'static':
             default:

@@ -5,6 +5,7 @@ import {dfs} from "../utils/tree";
 
 import ElementRender from "./ElementRender";
 import TextRender from "./TextRender";
+import PathRender from "./PathRender";
 
 import {shouldClipCtx} from "./util";
 
@@ -36,6 +37,8 @@ export default class Render {
         nodes.forEach(node => {
             if (node.isTextNode) {
                 this.renderTextNode(node);
+            } else if (node.isPath) {
+                this.renderPath(node);
             } else {
                 this.renderElement(node);
             }
@@ -102,6 +105,11 @@ export default class Render {
 
     renderTextNode(node) {
         const renderer = new TextRender(this.ctx, node);
+        renderer.render();
+    }
+
+    renderPath(node) {
+        const renderer = new PathRender(this.ctx, node);
         renderer.render();
     }
 }
