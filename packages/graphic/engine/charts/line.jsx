@@ -80,6 +80,7 @@ export default class Line extends Base {
     // 算法： https://www.jointjs.com/blog/how-to-create-nice-looking-curves-in-svg-with-fixed-tangents
     // https://www.researchgate.net/publication/41391547_Modeling_Shapes_for_Pattern_Recognition_A_Simple_Low-Cost_Spline-based_Approach
     // https://github.com/gitcnd/jspline
+    // https://pomax.github.io/bezierinfo/#projections
     getCurvePathData(points) {
         const positions = this.layoutPoints(points);
 
