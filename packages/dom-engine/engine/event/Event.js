@@ -58,6 +58,10 @@ export default class Event {
             const { x, y } = this;
             const result = [];
 
+            if (this.type === 'click') {
+                debugger;
+            }
+
             dfs(this.root, (node) => {
                 if (!node.isTextNode && node.isHit?.(this, x, y)) {
                     result.push(node);

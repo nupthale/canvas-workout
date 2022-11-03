@@ -1,7 +1,7 @@
 import ExtendElement from "../../../dom-engine/engine/dom/ExtendElement";
 
 export default class Circle extends ExtendElement {
-    static type = 'path';
+    static type = 'circle';
 
     get type() {
         return Circle.type;

@@ -64,7 +64,7 @@ export default class Line {
                 {/* y axis */}
                 <YAxis context={this.context} />
                 {/* line */}
-                <Path d={this.pathData} />
+                <Path d={this.pathData} onMouseEnter={() => alert('path clicked')} />
                 <Circle
                     style={{
                         position: 'fixed',
