@@ -1,5 +1,5 @@
 import Node from "./Node";
-import {createElement} from "../utils/util";
+import {createElement, isInView} from "../utils/util";
 
 import Style from "../style/Style";
 import LayoutFactory from "../layout/LayoutFactory";
@@ -56,5 +56,19 @@ export default class Element extends Node {
 
     getLayout() {
         return this._layout;
+    }
+
+    isHit(e, x, y) {
+        const layout = this._layout;
+        const computedStyle = this.getComputedStyle();
+
+        // 鼠标点击的x， y，是否是当前的layer
+        const result = (
+            isInView(this, e.stage.ctx) &&
+            (x > layout.x && x < layout.x + computedStyle.width) &&
+            (y > layout.y && y < layout.y + computedStyle.height)
+        );
+
+        return result;
     }
 }

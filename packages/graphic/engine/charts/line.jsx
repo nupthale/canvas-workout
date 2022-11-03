@@ -2,6 +2,7 @@ import XAxis from "../elements/Axis/x.jsx";
 import YAxis from "../elements/Axis/y.jsx";
 
 import Path from '../elements/Path';
+import Circle from '../shape/Circle';
 
 const margin = 50;
 
@@ -64,6 +65,17 @@ export default class Line {
                 <YAxis context={this.context} />
                 {/* line */}
                 <Path d={this.pathData} />
+                <Circle
+                    style={{
+                        position: 'fixed',
+                        left: 20,
+                        top: 20,
+                    }}
+                    onClick={() => {
+                        alert(123);
+                    }}
+                    radius={20}
+                />
             </view>
         );
     }

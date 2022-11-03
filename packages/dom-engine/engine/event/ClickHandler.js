@@ -28,6 +28,7 @@ export default class ClickHandler {
             stage: this.stage,
         });
 
+        debugger;
         layerEvent.path.forEach(layer => {
             if (!layerEvent.isPropagationStopped) {
                 layer.emit(type, layerEvent);

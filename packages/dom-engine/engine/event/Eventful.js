@@ -1,8 +1,18 @@
 import {filter, Subject, tap} from "rxjs";
 
 export default class Eventful {
-    constructor() {
+    constructor(props) {
         this.event$ = new Subject({});
+
+        this._initEvent(props);
+    }
+
+    _initEvent(props) {
+        const {
+            onClick,
+        } = props;
+
+        this.on('click', onClick);
     }
 
     on(name, handler) {

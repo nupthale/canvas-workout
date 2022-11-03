@@ -59,7 +59,7 @@ export default class Event {
             const result = [];
 
             dfs(this.root, (node) => {
-                if (!node.isTextNode && this.isHit(node, x, y)) {
+                if (!node.isTextNode && node.isHit?.(this, x, y)) {
                     result.push(node);
                     return true;
                 }
@@ -69,21 +69,6 @@ export default class Event {
 
             this._path = result;
         }
-
-    }
-
-    isHit(element, x, y) {
-        const layout = element._layout;
-        const computedStyle = element.getComputedStyle();
-
-        // 鼠标点击的x， y，是否是当前的layer
-        const result = (
-            isInView(element, this.stage.ctx) &&
-            (x > layout.x && x < layout.x + computedStyle.width) &&
-            (y > layout.y && y < layout.y + computedStyle.height)
-        );
-
-        return result;
 
     }
 }

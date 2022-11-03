@@ -5,6 +5,7 @@ import Registry from "../../dom-engine/engine/render/Registry";
 import Line from "./charts/line.jsx";
 
 import Path, { PathRender } from "./elements/Path";
+import Circle , { CircleRender } from "./shape/Circle.js";
 
 export default class Chart {
     constructor(props) {
@@ -19,6 +20,7 @@ export default class Chart {
         this.elementRegistry = new Registry();
 
         this.elementRegistry.register(Path.type, PathRender);
+        this.elementRegistry.register(Circle.type, CircleRender);
     }
 
     render() {
@@ -32,7 +34,6 @@ export default class Chart {
 
         switch (type) {
             case 'line':
-                debugger;
                 const line = new Line(this.context);
                 this.stage = new Stage(
                     line.render(),

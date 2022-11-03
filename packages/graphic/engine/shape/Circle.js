@@ -1,16 +1,18 @@
-import ExtendElement from "../../../../dom-engine/engine/dom/ExtendElement";
+import ExtendElement from "../../../dom-engine/engine/dom/ExtendElement";
 
-export default class Path extends ExtendElement {
+export default class Circle extends ExtendElement {
     static type = 'path';
 
     get type() {
-        return Path.type;
+        return Circle.type;
     }
 
     constructor(props) {
         super(props);
 
-        this.path = new Path2D(props.d);
+        const { top, left } = this.props.style;
+        this.path = new Path2D();
+        this.path.arc(left, top, props.radius , 0,2 * Math.PI);
     }
 
     isHit(e, x, y) {
@@ -18,7 +20,7 @@ export default class Path extends ExtendElement {
     }
 }
 
-export class PathRender {
+export class CircleRender {
     constructor(ctx, element) {
         this.ctx = ctx;
         this.element = element;
