@@ -10,9 +10,36 @@ export default class Eventful {
     _initEvent(props) {
         const {
             onClick,
+            onContextmenu,
+            onDbClick,
+            onMouseEnter,
+            onMouseMove,
+            onMouseLeave,
         } = props;
 
-        this.on('click', onClick);
+        if (onClick) {
+            this.on('click', onClick);
+        }
+
+        if (onContextmenu) {
+            this.on('contextmenu', onContextmenu);
+        }
+
+        if (onDbClick) {
+            this.on('dblclick', onContextmenu);
+        }
+
+        if (onMouseEnter) {
+            this.on('mouseenter', onContextmenu);
+        }
+
+        if (onMouseMove) {
+            this.on('mousemove', onMouseMove);
+        }
+
+        if (onMouseLeave) {
+            this.on('mouseleave', onMouseLeave);
+        }
     }
 
     on(name, handler) {
