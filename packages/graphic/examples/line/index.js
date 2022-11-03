@@ -8,7 +8,7 @@ export const renderLine = (mountId) => {
         mountId,
         width: 500,
         height: 500,
-        xField: 'Year',
-        yField: 'Deaths',
+        xField: 'Name',
+        yField: 'Value',
     });
 }

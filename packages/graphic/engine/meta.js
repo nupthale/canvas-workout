@@ -6,14 +6,13 @@ export const yAxisWidth = 50;
 
 export const titleBarHeight = 50;
 
-export const chartPadding = 50;
-
+// 不考虑chartPadding
 export const getChartWidth = (width) => {
-    return width - canvasPadding * 2 - yAxisWidth - chartPadding * 2;
+    return width - canvasPadding * 2 - yAxisWidth;
 }
 
 export const getChartHeight = (height) => {
-    return height - canvasPadding * 2 - xAxisHeight - titleBarHeight - chartPadding * 2;
+    return height - canvasPadding * 2 - xAxisHeight - titleBarHeight;
 }
 
 export const getYAxisOrigin = () => {

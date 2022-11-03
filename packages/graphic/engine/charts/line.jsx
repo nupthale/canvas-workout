@@ -3,11 +3,14 @@ import YAxis from "../elements/Axis/y.jsx";
 
 import Path from '../elements/Path';
 import Circle from '../shape/Circle';
+import Base from "./base.jsx";
 
-const margin = 50;
+import { getChartHeight, getYAxisOrigin, getChartWidth, getXAxisOrigin } from "../meta.js";
 
-export default class Line {
+export default class Line extends Base {
     constructor(context) {
+        super(context);
+
         this.context = context;
 
         const { data, yField } = this.context;
@@ -16,47 +19,83 @@ export default class Line {
         this.maxY = this.getMaxY();
 
         this.pathData = this.getPathData(this.yValues);
+        this.curvePathData = this.getCurvePathData(this.yValues);
     }
 
     getMaxY() {
-        const { data, yField } = this.context;
-
         let maxY = 0;
+
         this.yValues.forEach(yValue => {
             maxY = Math.max(yValue, maxY);
         });
 
-        return maxY;
+        const tickCount = Math.ceil(maxY / 100);
+        return tickCount * 100;
     }
 
-    getYPosition(y) {
+    layoutPointY(y) {
         const { height } = this.context;
+        const yHeight = getChartHeight(height);
+        const yOrigin = getYAxisOrigin();
 
-        const pos = (y / this.maxY) * (height - margin * 2);
+        const pos = yHeight - (y / this.maxY) * yHeight + yOrigin.y;
         return parseInt(pos);
     }
 
-    getXPosition(index) {
-        const { width, data, yField } = this.context;
+    layoutPointX(index) {
+        const { width, height, data, yField } = this.context;
 
-        this.tickInterval = (width - margin * 2) / data.length;
+        const xOrigin = getXAxisOrigin(height);
+        this.tickInterval = getChartWidth(width) / (data.length - 1);
 
-        return parseInt((index + 1) * this.tickInterval + margin);
+        return (index) * this.tickInterval + xOrigin.x;
+    }
+
+
+    layoutPoints(points) {
+        const positions = [];
+
+        points.forEach((point, index) => {
+            positions.push({
+               x: this.layoutPointX(index),
+               y: this.layoutPointY(point),
+           });
+        });
+
+        return positions;
     }
 
     getPathData(points) {
         const start = points[0];
 
-        let d = `M ${this.getXPosition(0)} ${this.getYPosition(start)}`;
+        let d = `M ${this.layoutPointX(0)} ${this.layoutPointY(start)}`;
 
         points.slice(1).forEach((point, index) => {
-            d += ` L ${this.getXPosition(index + 1)} ${this.getYPosition(point)}`;
+            d += ` L ${this.layoutPointX(index + 1)} ${this.layoutPointY(point)}`;
         });
 
         return d;
     }
 
-    render() {
+    getCurvePathData(points) {
+        const positions = this.layoutPoints(points);
+
+        let d = `M ${positions[0].x} ${positions[0].y}`;
+
+        positions.forEach((position, index) => {
+            if (index < positions.length - 1) {
+                if (index % 2 === 0) {
+                    d += ` Q${positions[index].x}, ${positions[index + 1].y} ${positions[index + 1].x}, ${positions[index + 1].y}`;
+                } else {
+                    d += ` T${positions[index + 1].x} ${positions[index + 1].y}`;
+                }
+            }
+        });
+
+        return d;
+    }
+
+    renderContent() {
         return (
             <view>
                 {/* x axis */}
@@ -64,18 +103,8 @@ export default class Line {
                 {/* y axis */}
                 <YAxis context={this.context} />
                 {/* line */}
-                <Path id="hale" d={this.pathData} onClick={() => alert('path clicked')} />
-                <Circle
-                    style={{
-                        position: 'fixed',
-                        left: 20,
-                        top: 20,
-                    }}
-                    onClick={() => {
-                        alert(123);
-                    }}
-                    radius={20}
-                />
+                <Path id="hale" d={this.pathData} stroke="#85CB9F" onClick={() => alert('path clicked')} />
+                <Path id="hale" d={this.curvePathData} stroke="#8884D8" onClick={() => alert('path clicked')} />
             </view>
         );
     }

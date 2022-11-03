@@ -11,6 +11,8 @@ export default class Path extends ExtendElement {
     constructor(props) {
         super(props);
 
+        this.stroke = props.stroke;
+
         this.d = props.d;
         // 这里的定义有问题， 定义到这里， 在render的部分设置strokeWidth不生效；
         // 如果定义在render， 这里isHit无法使用判断，即使点击也是false，
@@ -32,8 +34,9 @@ export class PathRender {
     render() {
         this.ctx.save();
 
-        this.ctx.strokeStyle = '#85CB9F';
+        this.ctx.strokeStyle = this.element.stroke;
         this.ctx.lineWidth = 5;
+        this.ctx.lineCap = 'round';
         this.ctx.stroke(this.element.path)
 
 
