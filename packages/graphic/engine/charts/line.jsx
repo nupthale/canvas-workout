@@ -5,6 +5,9 @@ import Path from '../elements/Path';
 import Circle from '../shape/Circle';
 import Base from "./base.jsx";
 
+import {getBezierList} from "../utils/bezier.js";
+
+
 import { getChartHeight, getYAxisOrigin, getChartWidth, getXAxisOrigin } from "../meta.js";
 
 export default class Line extends Base {
@@ -19,7 +22,7 @@ export default class Line extends Base {
         this.maxY = this.getMaxY();
 
         this.pathData = this.getPathData(this.yValues);
-        this.curvePathData = this.getCurvePathData(this.yValues);
+        this.curvePathData = this.getCurvePathData2(this.yValues);
     }
 
     getMaxY() {
@@ -81,6 +84,7 @@ export default class Line extends Base {
     // https://www.researchgate.net/publication/41391547_Modeling_Shapes_for_Pattern_Recognition_A_Simple_Low-Cost_Spline-based_Approach
     // https://github.com/gitcnd/jspline
     // https://pomax.github.io/bezierinfo/#projections
+    // https://jermmy.github.io/2016/08/01/2016-8-1-Bezier-Curve-SVG/
     getCurvePathData(points) {
         const positions = this.layoutPoints(points);
 
@@ -95,6 +99,26 @@ export default class Line extends Base {
                 }
             }
         });
+
+        return d;
+    }
+
+    getCurvePathData2(points) {
+        const positions = this.layoutPoints(points);
+
+        const list = getBezierList(
+            positions,
+            false,
+        );
+
+        let d = '';
+
+        list.forEach(item => {
+            const [point0, point1, point2, point3] = item;
+            d += ` M ${point0.x} ${point0.y} C ${point1.x} ${point1.y} ${point2.x} ${point2.y} ${point3.x} ${point3.y}`;
+        });
+
+        console.info('#list', list, d);
 
         return d;
     }
