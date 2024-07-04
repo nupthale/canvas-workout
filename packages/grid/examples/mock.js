@@ -58,7 +58,7 @@ export const columns = [
 ];
 
 const list = [];
-const million = 1000000;
+const million = 10000;
 
 for (let i = 0; i < 1 * million; i++) {
     list.push(

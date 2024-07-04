@@ -38,6 +38,8 @@ export default class Scrollable {
         const { event$ } = this.context;
 
         this.dom.addEventListener('mousewheel', (e) => {
+            e.preventDefault();
+
             e.stopPropagation();
             this.scrollBy(e.deltaX, e.deltaY);
         });

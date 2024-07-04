@@ -35,6 +35,40 @@ export default class GridApp {
             columns,
             dataSource,
             onColResize: this.onColResize,
+            fixedConfig: {
+                left: 2,
+                header: 1,
+            },
+            colWidths: {
+                0: 100,
+                1: 60,
+                7: 60,
+            },
+            rowHeights: {
+                3: 200,
+            },
+            combineRanges: [
+                { start: [3, 3], end: [3, 5] }
+            ],
+            decorators: {
+                background: [{
+                    rowIndex: 3,
+                    colIndex: 3,
+                    color: 'rgba(238, 196, 87, 0.4)',
+                }, {
+                    rowIndex: 6,
+                    colIndex: 6,
+                    color: '#FAEAFA',
+                }, {
+                    rowIndex: 7,
+                    colIndex: 6,
+                    color: '#FAEAFA',
+                }, {
+                    rowIndex: 8,
+                    colIndex: 6,
+                    color: '#FAEAFA',
+                }]
+            }
         });
     }
 

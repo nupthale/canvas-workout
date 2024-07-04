@@ -24,7 +24,7 @@ export default class Resize {
             const lineX = layout.xMap[j] + colWidth
 
             // 判断这一列是否在高亮的范围内
-            if (lineX <= eventX + 5 && lineX > eventX - 5 && eventY < rowHeight) {
+            if (eventX > lineX - 5 && eventX < lineX + 5 && eventY < rowHeight) {
                 if (callback) {
                     // 高亮
                     callback();
@@ -55,7 +55,7 @@ export default class Resize {
             const eventX = e.clientX - left;
             this.lineX = eventX;
 
-            if (this.isMouseDown) {
+            if (this.selectedCol) {
                 const colIndex = this.selectedCol.colIndex;
                 // 新的rect宽度
                 const width = eventX - layout.xMap[colIndex];
